@@ -20,6 +20,8 @@ public class TrackSetting extends SugarRecord<TrackSetting>{
     String date;
     boolean active;
 
+    int status;
+
     public TrackSetting() {
 
     }
@@ -109,4 +111,13 @@ public class TrackSetting extends SugarRecord<TrackSetting>{
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
 }

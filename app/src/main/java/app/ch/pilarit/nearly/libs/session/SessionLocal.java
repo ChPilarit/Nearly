@@ -1,4 +1,4 @@
-package app.ch.pilarit.nearly.service.session;
+package app.ch.pilarit.nearly.libs.session;
 
 import android.content.Context;
 import android.content.SharedPreferences;

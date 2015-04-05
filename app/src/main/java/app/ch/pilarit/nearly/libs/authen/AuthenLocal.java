@@ -1,11 +1,11 @@
-package app.ch.pilarit.nearly.service.authen;
+package app.ch.pilarit.nearly.libs.authen;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.util.Map;
 
-import app.ch.pilarit.nearly.service.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.KeyService;
+import app.ch.pilarit.nearly.libs.session.SessionLocal;
 
 /**
  * Created by ch_pilarit on 4/2/15 AD.
@@ -17,8 +17,8 @@ public class AuthenLocal {
 
     public static boolean hasRegister(Context context) {
         sessionLocal = SessionLocal.getInstance(context);
-        String usernameInit = String.valueOf(sessionLocal.get("username"));
-        String passwordInit = String.valueOf(sessionLocal.get("password"));
+        String usernameInit = String.valueOf(sessionLocal.get(KeyService.AUTHEN_USERNAME));
+        String passwordInit = String.valueOf(sessionLocal.get(KeyService.AUTHEN_PASSWORD));
 
         if(usernameInit.length() > 0 && passwordInit.length() > 0){
             return true;
@@ -45,8 +45,8 @@ public class AuthenLocal {
 
         sessionLocal = SessionLocal.getInstance(context);
 
-        String usernameInit = String.valueOf(sessionLocal.get("username"));
-        String passwordInit = String.valueOf(sessionLocal.get("password"));
+        String usernameInit = String.valueOf(sessionLocal.get(KeyService.AUTHEN_USERNAME));
+        String passwordInit = String.valueOf(sessionLocal.get(KeyService.AUTHEN_PASSWORD));
 
         if(usernameInit.equals(username) && passwordInit.equals(password)){
             sessionLocal.createSession();
@@ -60,7 +60,7 @@ public class AuthenLocal {
 
         sessionLocal = SessionLocal.getInstance(context);
 
-        String passwordInit = String.valueOf(sessionLocal.get("password"));
+        String passwordInit = String.valueOf(sessionLocal.get(KeyService.AUTHEN_PASSWORD));
 
         if(passwordInit.equals(password)){
             sessionLocal.createSession();

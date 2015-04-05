@@ -1,9 +1,13 @@
 package app.ch.pilarit.nearly;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import app.ch.pilarit.nearly.services.GPSTracking;
+import app.ch.pilarit.nearly.utils.AccountSessionUtil;
 
 
 public class RoleActivity extends ActionBarActivity {
@@ -11,6 +15,12 @@ public class RoleActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(AccountSessionUtil.hasTracker(this)) {
+            Intent gpsTracking = new Intent(this, GPSTracking.class);
+            this.startService(gpsTracking);
+        }
+
         setContentView(R.layout.activity_role);
     }
 

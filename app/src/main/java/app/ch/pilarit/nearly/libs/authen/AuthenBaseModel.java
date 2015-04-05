@@ -1,4 +1,4 @@
-package app.ch.pilarit.nearly.service.authen;
+package app.ch.pilarit.nearly.libs.authen;
 
 /**
  * Created by ch_pilarit on 4/2/15 AD.
