@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tracker_actionbar">Tracker Setting</string>
+    <string name="tracker_hint_name">Name</string>
+    <string name="tracker_edt_start_time">08:00</string>
+    <string name="tracker_edt_to">-</string>
+    <string name="tracker_edt_end_time">16:00</string>
+    <string name="tracker_hint_telephone">Telephone for send SMS</string>
+    <string name="tracker_tg_sunday">Su</string>
+    <string name="tracker_tg_monday">Mo</string>
+    <string name="tracker_tg_tuesday">Tu</string>
+    <string name="tracker_tg_wednesday">We</string>
+    <string name="tracker_tg_thursday">Th</string>
+    <string name="tracker_tg_friday">Fr</string>
+    <string name="tracker_tg_saturday">Sa</string>
+    <string name="tracker_cb_repeat">Repeat</string>
+    <string name="tracker_btn_save">Save</string>
+
+
+
+</resources>

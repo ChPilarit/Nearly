@@ -1,0 +1,192 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/gray"
+    tools:context="app.ch.pilarit.nearly.LoginActivity">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardBackgroundColor="#fff"
+        android:layout_margin="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10_dp"
+                android:inputType="numberPassword"
+                android:id="@+id/login_edt_password"
+                android:singleLine="true"
+                android:hint="@string/login_hint_password"/>
+
+            <TableLayout
+                android:id="@+id/login_table_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_edt_password"
+                android:layout_margin="20dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_1"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button1" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_2"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button2" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_3"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_4"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button4" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_5"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button5" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_6"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button6" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_7"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button7" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_8"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button8" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_number_9"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:id="@+id/login_button9" />
+                </TableRow>
+
+            </TableLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_table_number">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_number_delete"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/red"
+                    android:textColor="@color/white"
+                    android:id="@+id/login_button_delete" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_number_0"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:background="@color/black"
+                    android:textColor="@color/white"
+                    android:id="@+id/login_button_0" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_number_ok"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:background="@color/green"
+                    android:textColor="@color/white"
+                    android:id="@+id/login_button_ok" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+</RelativeLayout>
