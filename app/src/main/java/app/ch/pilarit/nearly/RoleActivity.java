@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
+import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -86,6 +87,7 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
     private void gotoAccountSetting(int roleid) {
         Intent gotoAccountSetting = new Intent(RoleActivity.this, AccountActivity.class);
         gotoAccountSetting.putExtra(KeyAccount.ROLE_ID, roleid);
+        gotoAccountSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.ROLE_ACTIVITY);
         startActivity(gotoAccountSetting);
         finish();
     }

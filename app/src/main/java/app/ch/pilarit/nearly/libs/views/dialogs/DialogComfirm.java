@@ -46,7 +46,7 @@ public class DialogComfirm implements View.OnClickListener{
     public void show(String title, int iconId, String question, DialogInterface dialogInterface){
         dialogComfirmTevTitle.setText(title);
         dialogComfirmImvIcon.setImageResource(iconId);
-        dialogComfirmTevQuestion.setText(question);
+        dialogComfirmTevQuestion.setText(String.format("\n%s\n",question));
         this.dialogInterface = dialogInterface;
         dialogComfirmBtnOk.setOnClickListener(this);
         dialogComfirmBtnCancel.setOnClickListener(this);

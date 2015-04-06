@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/gray"
+    android:background="@color/green"
     tools:context="app.ch.pilarit.nearly.LoginActivity">
 
 
