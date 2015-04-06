@@ -65,7 +65,7 @@
                     android:layout_below="@id/account_edt_repassword"
                     android:hint="@string/account_hint_email"
                     android:layout_margin="@dimen/margin_10_dp"
-                    android:maxLength="20"
+                    android:maxLength="50"
                     android:singleLine="true"
                     android:inputType="textEmailAddress"/>
             </RelativeLayout>

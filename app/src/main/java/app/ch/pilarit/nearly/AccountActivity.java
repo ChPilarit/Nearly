@@ -64,6 +64,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             Intent gotoLogin = new Intent(this, LoginActivity.class);
             gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
             startActivity(gotoLogin);
+            finish();
         }
     }
 

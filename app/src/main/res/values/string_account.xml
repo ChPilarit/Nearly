@@ -6,8 +6,8 @@
     <string name="account_hint_repassword">Re-password</string>
     <string name="account_hint_email">Email</string>
     <string name="account_btn_save">Save</string>
-    <string name="account_warn_username_lenght">Username must length > 4.</string>
-    <string name="account_warn_password_lenght">Password must length > 4.</string>
+    <string name="account_warn_username_lenght">Username must length > 3.</string>
+    <string name="account_warn_password_lenght">Password must length > 3.</string>
     <string name="account_warn_password_invalid">Password mismatch.</string>
     <string name="account_warn_email_invalid">Email invalid.</string>
 </resources>
