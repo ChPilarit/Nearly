@@ -2,13 +2,13 @@ package app.ch.pilarit.nearly;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
@@ -16,7 +16,7 @@ import app.ch.pilarit.nearly.services.GPSTracking;
 import app.ch.pilarit.nearly.utils.AccountSessionUtil;
 
 
-public class RoleActivity extends ActionBarActivity implements View.OnClickListener{
+public class RoleActivity extends BaseActivity implements View.OnClickListener{
 
     private Button roleBtnFolower;
     private Button roleBtnTraker;
@@ -31,7 +31,6 @@ public class RoleActivity extends ActionBarActivity implements View.OnClickListe
         }*/
         setContentView(R.layout.activity_role);
         initView();
-        overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
     }
 
     private void initView() {
@@ -113,10 +112,5 @@ public class RoleActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.in_trans_left_right, R.anim.out_trans_right_left);
-        finish();
-    }
+
 }

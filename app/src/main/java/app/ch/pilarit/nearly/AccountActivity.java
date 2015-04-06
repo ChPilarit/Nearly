@@ -1,18 +1,18 @@
 package app.ch.pilarit.nearly;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import app.ch.pilarit.nearly.activity.BaseActivity;
 
-public class AccountActivity extends ActionBarActivity {
+
+public class AccountActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
     }
 
 
