@@ -1,0 +1,8 @@
+
+<resources>
+    <string name = "account_actionbar">Account Setting</string>
+    <string name="account_hint_username">Username</string>
+    <string name="account_hint_password">Password</string>
+    <string name="account_hint_repassword">Re-password</string>
+    <string name= "account_btn_save">Save</string>
+</resources>
