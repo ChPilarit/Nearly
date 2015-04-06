@@ -29,6 +29,7 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
             Intent gpsTracking = new Intent(this, GPSTracking.class);
             this.startService(gpsTracking);
         }*/
+        getActionBar().hide();
         setContentView(R.layout.activity_role);
         initView();
     }
