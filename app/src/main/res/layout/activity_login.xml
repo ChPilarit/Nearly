@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_1"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button1" />
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_2"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button2" />
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_3"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button3" />
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_4"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button4" />
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_5"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button5" />
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_6"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button6" />
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_7"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button7" />
@@ -128,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_8"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button8" />
@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btn_number_9"
                         android:layout_weight="1"
-                        android:background="@color/black"
+                        android:background="@drawable/bg_button"
                         android:textColor="@color/white"
                         android:layout_margin="5dp"
                         android:id="@+id/login_button9" />
@@ -168,7 +168,7 @@
                     android:text="@string/btn_number_0"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
-                    android:background="@color/black"
+                    android:background="@drawable/bg_button"
                     android:textColor="@color/white"
                     android:id="@+id/login_button_0" />
 
@@ -186,7 +186,15 @@
 
         </android.support.v7.widget.CardView>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/hello_world"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:id="@+id/login_tev_username"
+        android:layout_above="@+id/card_view"/>
 
 
 </RelativeLayout>

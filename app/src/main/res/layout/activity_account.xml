@@ -58,6 +58,16 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:inputType="numberPassword"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/account_edt_email"
+                    android:layout_below="@id/account_edt_repassword"
+                    android:hint="@string/account_hint_email"
+                    android:layout_margin="@dimen/margin_10_dp"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"/>
             </RelativeLayout>
 
 

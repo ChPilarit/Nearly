@@ -11,6 +11,7 @@ import android.widget.Button;
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -25,7 +26,7 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        validateActivity();
         /*if(AccountSessionUtil.hasTracker(this)) {
             Intent gpsTracking = new Intent(this, GPSTracking.class);
             this.startService(gpsTracking);
@@ -33,6 +34,15 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
         getActionBar().hide();
         setContentView(R.layout.activity_role);
         initView();
+    }
+
+    private void validateActivity() {
+        if(AuthenLocal.hasRegister(this)){
+            Intent gotoLogin = new Intent(this, LoginActivity.class);
+            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.ROLE_ACTIVITY);
+            startActivity(gotoLogin);
+            finish();
+        }
     }
 
     private void initView() {

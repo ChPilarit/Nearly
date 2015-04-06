@@ -116,7 +116,7 @@ public class Boast {
 		Boast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 
-	
+
 	public static void showText(Context context, int resId)
 			throws Resources.NotFoundException {
 		Boast.makeText(context, resId, Toast.LENGTH_SHORT).show();

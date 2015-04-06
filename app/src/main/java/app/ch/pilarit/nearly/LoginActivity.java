@@ -1,20 +1,35 @@
 package app.ch.pilarit.nearly;
 
+import android.accounts.Account;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
+import app.ch.pilarit.nearly.keys.KeyAccount;
+import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
+import app.ch.pilarit.nearly.libs.session.SessionLocal;
 
 
 public class LoginActivity extends BaseActivity {
+
+    private TextView loginTevUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         setContentView(R.layout.activity_login);
+        initView();
+    }
+
+    private void initView() {
+        String username = String.valueOf(SessionLocal.getInstance(this).get(KeyAccount.AUTHEN_USERNAME));
+        loginTevUserName = (TextView) findViewById(R.id.login_tev_username);
+
+        loginTevUserName.setText(username);
     }
 
 

@@ -1,5 +1,6 @@
 package app.ch.pilarit.nearly;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,9 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
+import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
+import app.ch.pilarit.nearly.libs.validate.EmailValidator;
+import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 
 
 public class AccountActivity extends BaseActivity implements View.OnClickListener{
@@ -18,6 +27,8 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     private EditText accountEdtPassword;
     private EditText accountEdtRepassword;
     private Button accountBtnSave;
+    private EditText accountEdtEmail;
+    private EmailValidator emailValidator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         accountEdtUsername = (EditText) findViewById(R.id.account_edt_username);
         accountEdtPassword = (EditText) findViewById(R.id.account_edt_password);
         accountEdtRepassword = (EditText) findViewById(R.id.account_edt_repassword);
+        accountEdtEmail = (EditText) findViewById(R.id.account_edt_email);
         accountBtnSave = (Button) findViewById(R.id.account_btn_save);
         accountBtnSave.setOnClickListener(this);
     }
@@ -48,18 +60,39 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         String username = accountEdtUsername.getText().toString();
         String password = accountEdtPassword.getText().toString();
         String repassword = accountEdtRepassword.getText().toString();
+        String email = accountEdtEmail.getText().toString();
 
         if(username.length() < 4){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_username_lenght, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(password.length() < 4){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_password_lenght, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(!password.equals(repassword)){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_password_invalid, Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if(emailValidator==null) emailValidator = new EmailValidator();
+
+        if(email == null || !emailValidator.validate(email)){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_email_invalid, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int roleId = getIntent().getIntExtra(KeyAccount.ROLE_ID, 0);
+
+        Map accountMap = new HashMap<String, Object>();
+        accountMap.put(KeyAccount.AUTHEN_USERNAME, username);
+        accountMap.put(KeyAccount.AUTHEN_PASSWORD, password);
+        accountMap.put(KeyAccount.ROLE_ID, roleId);
+        accountMap.put(KeyAccount.AUTHEN_EMAIL, email);
+
+        AuthenLocal.register(AccountActivity.this, accountMap);
 
         String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
         if(KeyGlobal.ROLE_ACTIVITY.equals(fromActivity)){
