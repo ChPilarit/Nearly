@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name2">Nearly</string>
+        <string name="select_role">Please select role</string>
+        <string name= "follower">Follower</string>
+        <string name= "tracker">Tracker</string>
+
+
+
+</resources>
