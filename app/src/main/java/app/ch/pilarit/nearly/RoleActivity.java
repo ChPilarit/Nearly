@@ -80,7 +80,7 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
             question = getResources().getString(R.string.role_question_tracker);
         }
 
-        new DialogComfirm(RoleActivity.this).show(title, R.drawable.ic_launcher, question, new DialogInterface() {
+        new DialogComfirm(RoleActivity.this).show(title, R.drawable.ic_action_tick, question, new DialogInterface() {
             @Override
             public void ok(Dialog dialog) {
                 gotoAccountSetting(roleid);

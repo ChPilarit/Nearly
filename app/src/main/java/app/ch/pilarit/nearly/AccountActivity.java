@@ -1,6 +1,5 @@
 package app.ch.pilarit.nearly;
 
-import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -50,40 +49,29 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.account_btn_save:{
-                doValidate();
+                if(validate()){
+                    doRegisterAccount();
+                    gotoNextPage();
+                }
                 break;
             }
         }
     }
 
-    private void doValidate() {
+    private void gotoNextPage() {
+        String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
+        if(KeyGlobal.ROLE_ACTIVITY.equals(fromActivity)){
+            Intent gotoLogin = new Intent(this, LoginActivity.class);
+            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
+            startActivity(gotoLogin);
+        }
+    }
+
+    private void doRegisterAccount() {
         String username = accountEdtUsername.getText().toString();
         String password = accountEdtPassword.getText().toString();
         String repassword = accountEdtRepassword.getText().toString();
         String email = accountEdtEmail.getText().toString();
-
-        if(username.length() < 4){
-            Boast.makeText(AccountActivity.this, R.string.account_warn_username_lenght, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(password.length() < 4){
-            Boast.makeText(AccountActivity.this, R.string.account_warn_password_lenght, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(!password.equals(repassword)){
-            Boast.makeText(AccountActivity.this, R.string.account_warn_password_invalid, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(emailValidator==null) emailValidator = new EmailValidator();
-
-        if(email == null || !emailValidator.validate(email)){
-            Boast.makeText(AccountActivity.this, R.string.account_warn_email_invalid, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         int roleId = getIntent().getIntExtra(KeyAccount.ROLE_ID, 0);
 
         Map accountMap = new HashMap<String, Object>();
@@ -93,13 +81,37 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         accountMap.put(KeyAccount.AUTHEN_EMAIL, email);
 
         AuthenLocal.register(AccountActivity.this, accountMap);
+    }
 
-        String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
-        if(KeyGlobal.ROLE_ACTIVITY.equals(fromActivity)){
-            Intent gotoLogin = new Intent(this, LoginActivity.class);
-            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
-            startActivity(gotoLogin);
+    private boolean validate() {
+        String username = accountEdtUsername.getText().toString();
+        String password = accountEdtPassword.getText().toString();
+        String repassword = accountEdtRepassword.getText().toString();
+        String email = accountEdtEmail.getText().toString();
+
+        if(username.length() < 4){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_username_lenght, Toast.LENGTH_SHORT).show();
+            return false;
         }
+
+        if(password.length() < 4){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_password_lenght, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!password.equals(repassword)){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_password_invalid, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(emailValidator==null) emailValidator = new EmailValidator();
+
+        if(email == null || !emailValidator.validate(email)){
+            Boast.makeText(AccountActivity.this, R.string.account_warn_email_invalid, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
 

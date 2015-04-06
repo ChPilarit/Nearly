@@ -17,7 +17,7 @@
             android:id="@+id/dialog_comfirm_imv_icon"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/ic_action_tick"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +36,8 @@
             android:id="@+id/dialog_comfirm_imv_close"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_launcher"/>
+            android:background="@drawable/bg_press"
+            android:src="@drawable/ic_action_cancel"/>
 
     </RelativeLayout>
 
