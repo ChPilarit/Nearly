@@ -12,6 +12,7 @@ public class AccountActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
     }
 
 
@@ -35,5 +36,12 @@ public class AccountActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.in_trans_left_right, R.anim.out_trans_right_left);
+        finish();
     }
 }

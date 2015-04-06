@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/dialog_comfirm_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/green">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/dialog_comfirm_imv_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/hello_world"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/dialog_comfirm_tev_title"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/dialog_comfirm_imv_icon"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/dialog_comfirm_imv_close"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_launcher"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dialog_comfirm_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_comfirm_header"
+        android:padding="20dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="center"
+            android:text="@string/hello_world"
+            android:id="@+id/dialog_comfirm_tev_question" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_comfirm_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_comfirm_body"
+        android:orientation="horizontal"
+        android:background="@color/green">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_comfirm_cancel"
+            android:id="@+id/dialog_comfirm_btn_cancel"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="1dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_comfirm_ok"
+            android:id="@+id/dialog_comfirm_btn_ok"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="1dp"/>
+    </LinearLayout>
+</RelativeLayout>

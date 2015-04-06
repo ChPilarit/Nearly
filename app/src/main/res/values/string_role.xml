@@ -4,7 +4,8 @@
         <string name="select_role">Please select role</string>
         <string name= "follower">Follower</string>
         <string name= "tracker">Tracker</string>
-
-
+        <string name= "role_question_follower">You can select once time.\nAre you sure select follower role?</string>
+        <string name= "role_question_tracker">You can select once time.\nAre you sure select tracker role?</string>
+        <string name= "role_confirm">Confirm</string>
 
 </resources>

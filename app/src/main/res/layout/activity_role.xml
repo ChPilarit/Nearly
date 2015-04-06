@@ -40,8 +40,7 @@
         android:id="@+id/role_btn_follower"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/black"
-
+        android:background="@drawable/bg_button"
         android:textColor="@color/white" />
 
     <Button
@@ -49,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tracker"
         android:id="@+id/role_btn_tracker"
-        android:background="@color/black"
+        android:background="@drawable/bg_button"
         android:textColor="@color/white"
         android:layout_below="@+id/role_btn_follower"
         android:layout_alignParentLeft="true"
