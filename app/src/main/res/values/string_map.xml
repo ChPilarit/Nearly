@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name = "map_actionbar">Map Setting</string>
+    <string name = "map_clear_btn">Clear</string>
+    <string name = "map_undo_btn">Undo</string>
+    <string name = "map_draw_btn">Draw</string>
+    <string name = "map_save_btn">Save</string>
+
+</resources>

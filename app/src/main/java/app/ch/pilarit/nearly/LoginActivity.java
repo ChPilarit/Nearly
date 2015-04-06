@@ -1,6 +1,7 @@
 package app.ch.pilarit.nearly;
 
 import android.accounts.Account;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -126,8 +127,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.login_button_ok:{
                 SessionLocal session = AuthenLocal.login(this, loginPassword.getText().toString());
                 if(session == null || !session.hasSession()){
+                   loginPassword.setText("");
 
                 }else {
+                Intent gotoHome = new Intent(this,HomeActivity.class);
+                 startActivity(gotoHome);
+                 finish();
 
 
                 }

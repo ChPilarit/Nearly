@@ -112,9 +112,7 @@
                     android:textOff="@string/tracker_tg_sunday"
                     android:id="@+id/tracker_tg_su"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
 
                 <ToggleButton
                     android:layout_width="wrap_content"
@@ -123,9 +121,7 @@
                     android:textOff="@string/tracker_tg_monday"
                     android:id="@+id/tracker_tg_sunday"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,9 +129,7 @@
                     android:textOff="@string/tracker_tg_tuesday"
                     android:id="@+id/tracker_tg_tuesday"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
 
                 <ToggleButton
                     android:layout_width="wrap_content"
@@ -144,9 +138,7 @@
                     android:textOff="@string/tracker_tg_wednesday"
                     android:id="@+id/tracker_tg_wednesday"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
 
                 <ToggleButton
                     android:layout_width="wrap_content"
@@ -155,9 +147,7 @@
                     android:textOff="@string/tracker_tg_thursday"
                     android:id="@+id/tracker_tg_thursday"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
 
                 <ToggleButton
                     android:layout_width="wrap_content"
@@ -166,9 +156,7 @@
                     android:textOff="@string/tracker_tg_friday"
                     android:id="@+id/tracker_tg_friday"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
 
                 <ToggleButton
                     android:layout_width="wrap_content"
@@ -177,9 +165,7 @@
                     android:textOff="@string/tracker_tg_saturday"
                     android:id="@+id/tracker_tg_saturday"
                     android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:background="@color/blue"
-                    android:textColor="@color/white"/>
+                    android:layout_margin="2dp"/>
 
             </LinearLayout>
 

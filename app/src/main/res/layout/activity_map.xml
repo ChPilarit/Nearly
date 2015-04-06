@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context="app.ch.pilarit.nearly.MapActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/map_save_btn">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/margin_10_dp">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/ic_launcher"
+            android:text="@string/map_clear_btn"
+            android:id="@+id/map_clear_btn" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/ic_launcher"
+            android:text="@string/map_undo_btn"
+            android:id="@+id/map_undo_btn" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:drawableTop="@drawable/ic_launcher"
+            android:text="@string/map_draw_btn"
+            android:id="@+id/map_draw_btn" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/map_save_btn"
+        android:id="@+id/map_save_btn"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
