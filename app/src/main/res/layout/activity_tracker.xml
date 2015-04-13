@@ -31,24 +31,24 @@
                 android:layout_width="125dp"
                 android:layout_height="125dp"
                 android:layout_margin="5dp"
-                android:id="@+id/tracker_imv"
+                android:id="@+id/tracker_imv_map"
                 android:src="@drawable/ic_launcher" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:id="@+id/tracker_sw" />
+                android:id="@+id/tracker_sw_active" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tracker_sw"
-                android:layout_toRightOf="@id/tracker_imv"
+                android:layout_below="@id/tracker_sw_active"
+                android:layout_toRightOf="@id/tracker_imv_map"
                 android:hint="@string/tracker_hint_name"
-                android:id="@+id/tracker_tv_name" />
+                android:id="@+id/tracker_edt_name" />
 
 
 
@@ -57,10 +57,10 @@
                 android:id="@+id/tracker_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tracker_imv"
+                android:layout_toRightOf="@id/tracker_imv_map"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_below="@id/tracker_tv_name">
+                android:layout_below="@id/tracker_edt_name">
 
 
                 <TextView
@@ -68,7 +68,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
                     android:text="@string/tracker_edt_start_time"
-                    android:id="@+id/tracker_tv_start_time" />
+                    android:id="@+id/tracker_tv_starttime"
+                    android:background="@drawable/bg_press"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,95 +85,90 @@
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
                     android:text="@string/tracker_edt_end_time"
-                    android:id="@+id/tracker_tv_end"/>
+                    android:id="@+id/tracker_tv_endtime"
+                    android:background="@drawable/bg_press"/>
 
                 </LinearLayout>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tracker_imv"
+                android:layout_below="@+id/tracker_imv_map"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="@dimen/margin_10_dp"
                 android:layout_marginRight="@dimen/margin_10_dp"
-
-                android:id="@+id/tracker_telephone"
+                android:inputType="phone"
+                android:id="@+id/tracker_edt_telephone"
                 android:hint="@string/tracker_hint_telephone"/>
 
             <LinearLayout
+                android:id="@+id/tracker_layout_days"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tracker_cb_repeat">
 
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_sunday"
                     android:textOff="@string/tracker_tg_sunday"
-                    android:id="@+id/tracker_tg_su"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:id="@+id/tracker_tg_sunday"
+                    android:layout_weight="1"/>
 
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_monday"
                     android:textOff="@string/tracker_tg_monday"
-                    android:id="@+id/tracker_tg_sunday"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:id="@+id/tracker_tg_monday"
+                    android:layout_weight="1"/>
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_tuesday"
                     android:textOff="@string/tracker_tg_tuesday"
                     android:id="@+id/tracker_tg_tuesday"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:layout_weight="1"/>
 
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_wednesday"
                     android:textOff="@string/tracker_tg_wednesday"
                     android:id="@+id/tracker_tg_wednesday"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:layout_weight="1"/>
 
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_thursday"
                     android:textOff="@string/tracker_tg_thursday"
                     android:id="@+id/tracker_tg_thursday"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:layout_weight="1"/>
 
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_friday"
                     android:textOff="@string/tracker_tg_friday"
                     android:id="@+id/tracker_tg_friday"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:layout_weight="1"/>
 
                 <ToggleButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textOn="@string/tracker_tg_saturday"
                     android:textOff="@string/tracker_tg_saturday"
                     android:id="@+id/tracker_tg_saturday"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"/>
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tracker_telephone"
+                android:layout_below="@+id/tracker_edt_telephone"
                 android:layout_marginTop="20dp"
                 android:text="@string/tracker_cb_repeat"
                 android:id="@+id/tracker_cb_repeat"
@@ -189,7 +185,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tracker_btn_save"
         android:id="@+id/tracker_btn_save"
-        android:background="@color/black"
+        android:background="@drawable/bg_button"
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"/>
 

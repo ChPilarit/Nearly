@@ -1,20 +1,26 @@
 package app.ch.pilarit.nearly;
 
 import android.accounts.Account;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
@@ -30,8 +36,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private Button loginButton8;
     private Button loginButton9;
     private Button loginButton0;
-    private Button loginButtonDelete;
-    private Button loginButtonOk;
+    private ImageButton loginButtonDelete;
+    private ImageButton loginButtonOk;
     private EditText loginPassword;
 
     @Override
@@ -43,6 +49,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void initView() {
+
         String username = String.valueOf(SessionLocal.getInstance(this).get(KeyAccount.AUTHEN_USERNAME));
         loginPassword = (EditText) findViewById(R.id.login_edt_password);
         loginTevUserName = (TextView) findViewById(R.id.login_tev_username);
@@ -56,9 +63,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         loginButton8 = (Button) findViewById(R.id.login_button8);
         loginButton9 = (Button) findViewById(R.id.login_button9);
         loginButton0 = (Button) findViewById(R.id.login_button_0);
-        loginButtonDelete = (Button) findViewById(R.id.login_button_delete);
-        loginButtonOk = (Button) findViewById(R.id.login_button_ok);
-
+        loginButtonDelete = (ImageButton) findViewById(R.id.login_button_delete);
+        loginButtonOk = (ImageButton) findViewById(R.id.login_button_ok);
 
         loginTevUserName.setText(username);
         loginButton1.setOnClickListener(this);
@@ -127,14 +133,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.login_button_ok:{
                 SessionLocal session = AuthenLocal.login(this, loginPassword.getText().toString());
                 if(session == null || !session.hasSession()){
-                   loginPassword.setText("");
-
+                    loginPassword.setText("");
+                    Boast.makeText(this, R.string.login_warn_password_invalid).show();
                 }else {
-                Intent gotoHome = new Intent(this,HomeActivity.class);
-                 startActivity(gotoHome);
-                 finish();
-
-
+                    Intent gotoHome = new Intent(this,HomeActivity.class);
+                    startActivity(gotoHome);
+                    finish();
                 }
                 break;
             }
@@ -167,4 +171,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

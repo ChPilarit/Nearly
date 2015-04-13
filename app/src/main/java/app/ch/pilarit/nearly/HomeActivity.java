@@ -1,5 +1,6 @@
 package app.ch.pilarit.nearly;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,13 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.software.shell.fab.ActionButton;
+
 import app.ch.pilarit.nearly.activity.BaseActivity;
 
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     private DrawerLayout homeDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private ActionButton homeImvAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,25 @@ public class HomeActivity extends BaseActivity {
 
     private void initView() {
         setUpDrawerLayout();
+
+        homeImvAdd = (ActionButton) findViewById(R.id.home_imv_add);
+
+        homeImvAdd.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.home_imv_add:{
+                gotoMapSetting();
+                break;
+            }
+        }
+    }
+
+    private void gotoMapSetting() {
+        Intent gotoMap = new Intent(this, MapActivity.class);
+        startActivity(gotoMap);
     }
 
     private void setUpDrawerLayout() {
@@ -93,4 +116,6 @@ public class HomeActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

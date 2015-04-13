@@ -8,4 +8,6 @@ public class KeyGlobal {
     public final static String ROLE_ACTIVITY = "ROLE_ACTIVITY";
     public final static String LOGIN_ACTIVITY = "LOGIN_ACTIVITY";
     public final static String BASE_ACTIVITY = "BASE_ACTIVITY";
+    public final static String MAP_ACTIVITY = "MAP_ACTIVITY";
+    public final static String TRACKER_ACTIVITY = "TRACKER_ACTIVITY";
 }

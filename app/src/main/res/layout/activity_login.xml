@@ -152,18 +152,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/login_table_number">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="@string/btn_number_delete"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@color/red"
-                    android:textColor="@color/white"
+                    android:background="@drawable/bg_button_orange"
+                    android:src="@drawable/ic_action_backspace"
                     android:id="@+id/login_button_delete" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/btn_number_0"
                     android:layout_weight="1"
@@ -172,14 +172,14 @@
                     android:textColor="@color/white"
                     android:id="@+id/login_button_0" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="@string/btn_number_ok"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
-                    android:background="@color/green"
-                    android:textColor="@color/white"
+                    android:background="@drawable/bg_button_green"
+                    android:src="@drawable/ic_action_process_start"
                     android:id="@+id/login_button_ok" />
             </LinearLayout>
         </RelativeLayout>

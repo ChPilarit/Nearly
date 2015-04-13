@@ -1,13 +1,54 @@
 package app.ch.pilarit.nearly.libs.map;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ch_pilarit on 4/5/15 AD.
  */
 public class Map {
+
+    private static StringBuffer stringBuffer;
+    private static List<LatLng> poligonList;
+
+    public static String polygonToStringPolygon(List<LatLng> poligonList){
+        if(stringBuffer == null) stringBuffer = new StringBuffer();
+        stringBuffer.setLength(0);
+
+        String lat = "";
+        String lng = "";
+        for (LatLng latLng : poligonList){
+            lat = String.valueOf(latLng.latitude);
+            lng = String.valueOf(latLng.longitude);
+            stringBuffer.append(String.format("%s,%s/", lat, lng));
+        }
+
+        return stringBuffer.toString();
+    }
+
+    public static List<LatLng> stringPolygonToPolygon(String polygonStr){
+        if(poligonList == null) poligonList = new ArrayList<LatLng>();
+        poligonList.clear();
+
+        if(polygonStr == null) return poligonList;
+        if(!polygonStr.contains("/")) return poligonList;
+        String[] splitPolygon = polygonStr.split("/");
+
+        String[] splitLatLng;
+        for (String latlngStr : splitPolygon){
+            if(!latlngStr.contains(",")) continue;
+
+            splitLatLng = latlngStr.split(",");
+            LatLng latlng = new LatLng(Double.valueOf(splitLatLng[0]), Double.valueOf(splitLatLng[1]));
+            poligonList.add(latlng);
+        }
+
+        return poligonList;
+    }
 
     private boolean isPointInPolygon(LatLng tap, List<LatLng> vertices) {
         int intersectCount = 0;
@@ -41,4 +82,20 @@ public class Map {
 
         return x > pX;
     }
+
+    public static LatLng centroid(List<LatLng> points) {
+        double[] centroid = { 0.0, 0.0 };
+
+        for (int i = 0; i < points.size(); i++) {
+            centroid[0] += points.get(i).latitude;
+            centroid[1] += points.get(i).longitude;
+        }
+
+        int totalPoints = points.size();
+        centroid[0] = centroid[0] / totalPoints;
+        centroid[1] = centroid[1] / totalPoints;
+
+        return new LatLng(centroid[0], centroid[1]);
+    }
+
 }
