@@ -50,10 +50,10 @@ public class Map {
         return poligonList;
     }
 
-    private boolean isPointInPolygon(LatLng tap, List<LatLng> vertices) {
+    public static boolean isPointInPolygon(LatLng currentLatLng, List<LatLng> polygon) {
         int intersectCount = 0;
-        for (int j = 0; j < vertices.size() - 1; j++) {
-            if (rayCastIntersect(tap, vertices.get(j), vertices.get(j + 1))) {
+        for (int j = 0; j < polygon.size() - 1; j++) {
+            if (rayCastIntersect(currentLatLng, polygon.get(j), polygon.get(j + 1))) {
                 intersectCount++;
             }
         }
@@ -61,7 +61,7 @@ public class Map {
         return ((intersectCount % 2) == 1); // odd = inside, even = outside;
     }
 
-    private boolean rayCastIntersect(LatLng tap, LatLng vertA, LatLng vertB) {
+    public static boolean rayCastIntersect(LatLng tap, LatLng vertA, LatLng vertB) {
 
         double aY = vertA.latitude;
         double bY = vertB.latitude;
@@ -70,8 +70,7 @@ public class Map {
         double pY = tap.latitude;
         double pX = tap.longitude;
 
-        if ((aY > pY && bY > pY) || (aY < pY && bY < pY)
-                || (aX < pX && bX < pX)) {
+        if ((aY > pY && bY > pY) || (aY < pY && bY < pY) || (aX < pX && bX < pX)) {
             return false; // a and b can't both be above or below pt.y, and a or
             // b must be east of pt.x
         }

@@ -9,20 +9,36 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.software.shell.fab.ActionButton;
 
+import java.util.List;
+
 import app.ch.pilarit.nearly.activity.BaseActivity;
+import app.ch.pilarit.nearly.adapters.TrackListAdapter;
+import app.ch.pilarit.nearly.models.TrackSetting;
+import app.ch.pilarit.nearly.services.GPSTracking;
+import app.ch.pilarit.nearly.utils.AccountSessionUtil;
 
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
+    public final static String TRACKER_SETTING_ID = "TRACKER_SETTING_ID";
+
     private DrawerLayout homeDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ActionButton homeImvAdd;
+    private ListView homeLvTracklist;
+    private TrackListAdapter trackListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AccountSessionUtil.hasTracker(this)) {
+            Intent gpsTracking = new Intent(this, GPSTracking.class);
+            this.startService(gpsTracking);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
@@ -31,9 +47,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     private void initView() {
         setUpDrawerLayout();
 
-        homeImvAdd = (ActionButton) findViewById(R.id.home_imv_add);
+        homeLvTracklist = (ListView) findViewById(R.id.home_lv_tracklist);
 
+        homeImvAdd = (ActionButton) findViewById(R.id.home_imv_add);
         homeImvAdd.setOnClickListener(this);
+    }
+
+    private void setUpTrackListAdapter() {
+        List<TrackSetting> trackSettingList = TrackSetting.listAll(TrackSetting.class);
+        trackListAdapter = new TrackListAdapter(this, trackSettingList);
+        homeLvTracklist.setAdapter(trackListAdapter);
     }
 
     @Override
@@ -78,6 +101,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setUpTrackListAdapter();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -116,6 +145,5 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

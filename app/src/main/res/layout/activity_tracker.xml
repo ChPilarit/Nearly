@@ -32,7 +32,8 @@
                 android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:id="@+id/tracker_imv_map"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+                android:background="@drawable/bg_press"/>
 
             <Switch
                 android:layout_width="wrap_content"
@@ -172,7 +173,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/tracker_cb_repeat"
                 android:id="@+id/tracker_cb_repeat"
-                />
+                android:visibility="gone" />
 
 
         </RelativeLayout>

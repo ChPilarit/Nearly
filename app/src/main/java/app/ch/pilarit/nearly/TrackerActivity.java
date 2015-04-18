@@ -82,7 +82,8 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
             polygon = Map.stringPolygonToPolygon(polygonStr);
             cachemap = (Bitmap) getIntent().getParcelableExtra(MapActivity.KEY_CACHE_MAP);
         }else{
-            trackSetting = TrackSetting.findById(TrackSetting.class, 2L);
+            long id = getIntent().getLongExtra(HomeActivity.TRACKER_SETTING_ID, 0);
+            trackSetting = TrackSetting.findById(TrackSetting.class, id);
             cachemap = DbBitmapUtility.getBitmapBase64(trackSetting.getMapphoto());
             polygon = Map.stringPolygonToPolygon(trackSetting.getPolygon());
         }
@@ -207,44 +208,77 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         }
 
         trackSetting.save();
-        Boast.makeText(this, "Save Complete " + trackSetting.getId()).show();
+        //Boast.makeText(this, "Save Complete " + trackSetting.getId()).show();
+        onBackPressed();
     }
 
     public String getDaysOfWeek() {
         StringBuffer daysOfWeek = new StringBuffer();
 
-        daysOfWeek.append(trackerTgSunday.isChecked());
-        daysOfWeek.append("|");
-        daysOfWeek.append(trackerTgMonday.isChecked());
-        daysOfWeek.append("|");
-        daysOfWeek.append(trackerTgTuesday.isChecked());
-        daysOfWeek.append("|");
-        daysOfWeek.append(trackerTgWednesday.isChecked());
-        daysOfWeek.append("|");
-        daysOfWeek.append(trackerTgThursday.isChecked());
-        daysOfWeek.append("|");
-        daysOfWeek.append(trackerTgFriday.isChecked());
-        daysOfWeek.append("|");
-        daysOfWeek.append(trackerTgSaturday.isChecked());
+        if(trackerTgSunday.isChecked()) daysOfWeek.append("0");
+        if(trackerTgMonday.isChecked()) daysOfWeek.append("1");
+        if(trackerTgTuesday.isChecked()) daysOfWeek.append("2");
+        if(trackerTgWednesday.isChecked()) daysOfWeek.append("3");
+        if(trackerTgThursday.isChecked()) daysOfWeek.append("4");
+        if(trackerTgFriday.isChecked()) daysOfWeek.append("5");
+        if(trackerTgSaturday.isChecked()) daysOfWeek.append("6");
 
         return daysOfWeek.toString();
     }
 
     public void setDaysOfWeek(String daysOfWeek) {
+
+        trackerTgSunday.setChecked(false);
+        trackerTgMonday.setChecked(false);
+        trackerTgTuesday.setChecked(false);
+        trackerTgWednesday.setChecked(false);
+        trackerTgThursday.setChecked(false);
+        trackerTgFriday.setChecked(false);
+        trackerTgSaturday.setChecked(false);
+
         if(daysOfWeek == null) return;
 
-        String[] daysOfWeekSplit = daysOfWeek.split("\\|");
+        String[] daysOfWeekSplit = daysOfWeek.split("");
         if(daysOfWeekSplit == null || daysOfWeekSplit.length < 1){
             return;
         }
 
-        trackerTgSunday.setChecked(Boolean.valueOf(daysOfWeekSplit[0]));
-        trackerTgMonday.setChecked(Boolean.valueOf(daysOfWeekSplit[1]));
-        trackerTgTuesday.setChecked(Boolean.valueOf(daysOfWeekSplit[2]));
-        trackerTgWednesday.setChecked(Boolean.valueOf(daysOfWeekSplit[3]));
-        trackerTgThursday.setChecked(Boolean.valueOf(daysOfWeekSplit[4]));
-        trackerTgFriday.setChecked(Boolean.valueOf(daysOfWeekSplit[5]));
-        trackerTgSaturday.setChecked(Boolean.valueOf(daysOfWeekSplit[6]));
+        for (String index : daysOfWeekSplit){
+            int dayIndex = Integer.valueOf(index);
+
+            switch (dayIndex){
+                case 0 :{
+                    trackerTgSunday.setChecked(true);
+                    break;
+                }
+                case 1 :{
+                    trackerTgMonday.setChecked(true);
+                    break;
+                }
+                case 2 :{
+                    trackerTgTuesday.setChecked(true);
+                    break;
+                }
+                case 3 :{
+                    trackerTgWednesday.setChecked(true);
+                    break;
+                }
+                case 4 :{
+                    trackerTgThursday.setChecked(true);
+                    break;
+                }
+                case 5 :{
+                    trackerTgFriday.setChecked(true);
+                    break;
+                }
+                case 6 :{
+                    trackerTgSaturday.setChecked(true);
+                    break;
+                }
+            }
+
+        }
+
     }
 
     public void clearDaysOfWeek(boolean checked) {
@@ -263,6 +297,11 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         String name = trackerEdtName.getText().toString();
         if(name.trim().length() < 1){
             Boast.makeText(this, R.string.tracker_warn_enter_name).show();
+            return false;
+        }
+
+        if((trackSetting==null || trackSetting.getId() < 1) && TrackSetting.hasName(name)){
+            Boast.makeText(this, R.string.tracker_warn_already_name).show();
             return false;
         }
 

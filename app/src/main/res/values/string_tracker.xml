@@ -18,6 +18,7 @@
     <string name="tracker_btn_save">Save</string>
 
     <string name="tracker_warn_enter_name">Please enter name.</string>
+    <string name="tracker_warn_already_name">This name is already.</string>
     <string name="tracker_warn_enter_telephone">Please enter telephone.</string>
     <string name="tracker_warn_draw_map">Please draw map.</string>
     <string name="tracker_warn_time_invalid">Start time should before end time.</string>

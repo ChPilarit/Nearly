@@ -125,7 +125,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         }else{
             startActivity(gotoTrackerSetting);
         }
-        finish();
+
+        onBackPressed();
     }
 
     @Override

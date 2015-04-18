@@ -2,6 +2,7 @@ package app.ch.pilarit.nearly.models;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
