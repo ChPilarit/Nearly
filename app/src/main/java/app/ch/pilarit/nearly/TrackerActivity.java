@@ -300,9 +300,13 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
             return false;
         }
 
-        if((trackSetting==null || trackSetting.getId() < 1) && TrackSetting.hasName(name)){
-            Boast.makeText(this, R.string.tracker_warn_already_name).show();
-            return false;
+        try {
+            if (trackSetting.getId() < 1 && TrackSetting.hasName(name)) {
+                Boast.makeText(this, R.string.tracker_warn_already_name).show();
+                return false;
+            }
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
         }
 
         if(polygon == null || polygon.size() < 1){
