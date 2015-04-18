@@ -301,7 +301,7 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         }
 
         try {
-            if (trackSetting.getId() < 1 && TrackSetting.hasName(name)) {
+            if (trackSetting.getId() > 0 && TrackSetting.hasName(name)) {
                 Boast.makeText(this, R.string.tracker_warn_already_name).show();
                 return false;
             }
