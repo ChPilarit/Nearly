@@ -11,4 +11,6 @@ public class KeyGlobal {
     public final static String MAP_ACTIVITY = "MAP_ACTIVITY";
     public final static String TRACKER_ACTIVITY = "TRACKER_ACTIVITY";
     public final static String HOME_ACTIVITY = "HOME_ACTIVITY";
+
+    public final static String KEY_APP = "nearly_2015";
 }

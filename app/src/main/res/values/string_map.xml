@@ -7,5 +7,6 @@
     <string name = "map_draw_btn">Draw</string>
     <string name = "map_save_btn">Save</string>
     <string name = "map_warn_no_data">Please draw map.</string>
+    <string name = "map_warn_more_point">Please draw point > 2.</string>
 
 </resources>

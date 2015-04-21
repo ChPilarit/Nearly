@@ -34,8 +34,10 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.db.DbBitmapUtility;
 import app.ch.pilarit.nearly.libs.map.Map;
+import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.TrackSetting;
+import app.ch.pilarit.nearly.services.GPSTracking;
 
 import static android.widget.CompoundButton.OnCheckedChangeListener;
 
@@ -80,7 +82,11 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         if(KeyGlobal.MAP_ACTIVITY.equals(fromActivity)){
             String polygonStr = getIntent().getStringExtra(MapActivity.KEY_POLYGON);
             polygon = Map.stringPolygonToPolygon(polygonStr);
-            cachemap = (Bitmap) getIntent().getParcelableExtra(MapActivity.KEY_CACHE_MAP);
+            //cachemap = (Bitmap) getIntent().getParcelableExtra(MapActivity.KEY_CACHE_MAP);
+            if(SessionLocal.getInstance(this).hasKey(MapActivity.KEY_CACHE_MAP)) {
+                String cachemapStr = String.valueOf(SessionLocal.getInstance(this).get(MapActivity.KEY_CACHE_MAP));
+                cachemap = (Bitmap) DbBitmapUtility.getBitmapBase64(cachemapStr);
+            }
         }else{
             long id = getIntent().getLongExtra(HomeActivity.TRACKER_SETTING_ID, 0);
             trackSetting = TrackSetting.findById(TrackSetting.class, id);
@@ -208,7 +214,11 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         }
 
         trackSetting.save();
+
+        Intent gpsTracking = new Intent(this, GPSTracking.class);
+        this.startService(gpsTracking);
         //Boast.makeText(this, "Save Complete " + trackSetting.getId()).show();
+        SessionLocal.getInstance(this).remove(MapActivity.KEY_CACHE_MAP);
         onBackPressed();
     }
 
@@ -301,12 +311,15 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         }
 
         try {
-            if (trackSetting.getId() > 0 && TrackSetting.hasName(name)) {
+            if (trackSetting.getId() < 1 && TrackSetting.hasName(name)) {
                 Boast.makeText(this, R.string.tracker_warn_already_name).show();
                 return false;
             }
         }catch (NullPointerException ex){
-            ex.printStackTrace();
+            if (TrackSetting.hasName(name)) {
+                Boast.makeText(this, R.string.tracker_warn_already_name).show();
+                return false;
+            }
         }
 
         if(polygon == null || polygon.size() < 1){
@@ -371,7 +384,11 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
             if(KeyGlobal.MAP_ACTIVITY.equals(fromActivity)){
                 String polygonStr = data.getStringExtra(MapActivity.KEY_POLYGON);
                 polygon = Map.stringPolygonToPolygon(polygonStr);
-                cachemap = (Bitmap) data.getParcelableExtra(MapActivity.KEY_CACHE_MAP);
+                //cachemap = (Bitmap) data.getParcelableExtra(MapActivity.KEY_CACHE_MAP);
+                if(SessionLocal.getInstance(this).hasKey(MapActivity.KEY_CACHE_MAP)) {
+                    String cachemapStr = String.valueOf(SessionLocal.getInstance(this).get(MapActivity.KEY_CACHE_MAP));
+                    cachemap = (Bitmap) DbBitmapUtility.getBitmapBase64(cachemapStr);
+                }
                 trackerImvMap.setImageBitmap(cachemap);
             }
         }

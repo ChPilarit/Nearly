@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.gps.GPS;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.utils.DateUtil;
@@ -77,6 +78,7 @@ public class GPSTracking extends Service implements LocationListener{
                     smsJson.put("datetime", datetimeFormat.format(Calendar.getInstance().getTime()));
                     smsJson.put("lat", location.getLatitude());
                     smsJson.put("lng", location.getLongitude());
+                    smsJson.put("keyapp", KeyGlobal.KEY_APP);
                     Log.e("GPSTracking", smsJson.toString());
                     GlobalUtil.sendSMS(trackSetting.getTelephone(), smsJson.toString());
                 } catch (JSONException e) {

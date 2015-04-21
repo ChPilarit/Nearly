@@ -32,9 +32,15 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <!--For Debug-->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDbanzHUVTtZrkIJDyh9XqPj6BrOaCDqgE" />
+            android:value="AIzaSyDJnC70aQZKeQS_TvGOK0Bk4jz7EVOFWd0" />
+
+        <!--For Export APK-->
+        <!--<meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDbanzHUVTtZrkIJDyh9XqPj6BrOaCDqgE" />-->
 
         <meta-data
             android:name="DATABASE"

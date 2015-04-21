@@ -43,6 +43,13 @@ public class SessionLocal {
         return sharedPreferences.getString(key, "");
     }
 
+    public void remove(String key){
+        if(key == null) return;
+        if(!hasKey(key)) return;
+
+        sharedPreferences.edit().remove(key).commit();
+    }
+
     public boolean hasKey(String key) {
         return sharedPreferences.contains(key);
     }

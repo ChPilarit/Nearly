@@ -12,6 +12,7 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
+import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -58,7 +59,8 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
 
         switch (view.getId()){
             case R.id.role_btn_follower:{
-                doConfirmRole(KeyAccount.ROLE_FOLLOWER);
+                Boast.makeText(this, "Coming Soon.").show();
+                //doConfirmRole(KeyAccount.ROLE_FOLLOWER);
                 break;
             }
 

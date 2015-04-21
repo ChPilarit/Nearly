@@ -13,10 +13,14 @@ import android.widget.ListView;
 
 import com.software.shell.fab.ActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.TrackListAdapter;
+import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.models.TrackSetting;
 import app.ch.pilarit.nearly.services.GPSTracking;
 import app.ch.pilarit.nearly.utils.AccountSessionUtil;
@@ -71,6 +75,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     private void gotoMapSetting() {
         Intent gotoMap = new Intent(this, MapActivity.class);
+        gotoMap.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_ACTIVITY);
         startActivity(gotoMap);
     }
 

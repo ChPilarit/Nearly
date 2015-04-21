@@ -14,11 +14,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
@@ -28,9 +30,13 @@ import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.db.DbBitmapUtility;
 import app.ch.pilarit.nearly.libs.map.Map;
+import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 
@@ -60,6 +66,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     }
 
     private void initView() {
+        SessionLocal.getInstance(this).remove(KEY_CACHE_MAP);
         setUpMap();
 
         mapImvEdit = (ActionButton) findViewById(R.id.map_imv_edit);
@@ -104,8 +111,26 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
             return;
         }
 
+        if(polygon.getPoints().size() < 4){
+            Boast.makeText(this, R.string.map_warn_more_point).show();
+            return;
+        }
+
         if(marker != null) marker.setVisible(false);
-        googleMap.snapshot(this);
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.centroid(polygon.getPoints()), this.googleMap.getCameraPosition().zoom));
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                MapActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        googleMap.snapshot(MapActivity.this);
+                    }
+                });
+            }
+        }, 100);
+
     }
 
     @Override
@@ -117,7 +142,9 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         Intent gotoTrackerSetting = new Intent(this, TrackerActivity.class);
         gotoTrackerSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.MAP_ACTIVITY);
         gotoTrackerSetting.putExtra(KEY_POLYGON, Map.polygonToStringPolygon(polygon.getPoints()));
-        gotoTrackerSetting.putExtra(KEY_CACHE_MAP, ImageUtil.scaleDownBitmap(bitmap, 200, this));
+        String cachemapStr = DbBitmapUtility.getStringBase64(ImageUtil.scaleDownBitmap(bitmap, 200, this));
+        SessionLocal.getInstance(this).put(KEY_CACHE_MAP, cachemapStr);
+        //gotoTrackerSetting.putExtra(KEY_CACHE_MAP, ImageUtil.scaleDownBitmap(bitmap, 200, this));
 
         String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
         if(KeyGlobal.TRACKER_ACTIVITY.equals(fromActivity)){
@@ -164,11 +191,14 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
                 marker = googleMap.addMarker(new MarkerOptions().position(latLng));
                 polygon = googleMap.addPolygon(polygonOptions.add(latLng));
             }
+
+            this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.centroid(latLngList), this.googleMap.getCameraPosition().zoom));
             marker.setVisible(false);
         }
     }
 
     private void setUpStylePolygon() {
+        polygon = null;
         polygonOptions = new PolygonOptions();
         polygonOptions.strokeColor(Color.RED);
         polygonOptions.fillColor(Color.argb(33, 255, 0, 0));
