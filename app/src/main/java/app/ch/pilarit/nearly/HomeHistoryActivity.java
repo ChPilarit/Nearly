@@ -1,14 +1,10 @@
 package app.ch.pilarit.nearly;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
@@ -21,10 +17,10 @@ import app.ch.pilarit.nearly.models.History;
 
 public class HomeHistoryActivity extends BaseActivity {
 
-    private DrawerLayout historyDrawerLayout;
+    //private DrawerLayout historyDrawerLayout;
     private ListView historyLvTracklist;
     private HistoryListAdapter historyListAdapter;
-    private ActionBarDrawerToggle drawerToggle;
+    //private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +30,7 @@ public class HomeHistoryActivity extends BaseActivity {
     }
 
     private void initView() {
-        setUpDrawerLayout();
+        //setUpDrawerLayout();
         historyLvTracklist = (ListView)findViewById(R.id.history_lv_tracklist);
         setUpHistoryListAdapter();
         checkSMSReceive();
@@ -59,7 +55,7 @@ public class HomeHistoryActivity extends BaseActivity {
     }
 
     private void setUpDrawerLayout() {
-        historyDrawerLayout = (DrawerLayout) findViewById(R.id.history_drawer_layout);
+        /*historyDrawerLayout = (DrawerLayout) findViewById(R.id.history_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this,historyDrawerLayout,
                 R.drawable.ic_action_reorder,R.string.hello_world, R.string.tracker ){
             @Override
@@ -75,11 +71,11 @@ public class HomeHistoryActivity extends BaseActivity {
             }
         };
 
-        historyDrawerLayout.setDrawerListener(drawerToggle);
+        historyDrawerLayout.setDrawerListener(drawerToggle);*/
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setHomeButtonEnabled(true);
+        //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
     }
 
@@ -92,7 +88,7 @@ public class HomeHistoryActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_history, menu);
+        getMenuInflater().inflate(R.menu.menu_home_history, menu);
         return true;
     }
 
@@ -105,17 +101,20 @@ public class HomeHistoryActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent gotoAccountSetting = new Intent(this, AccountActivity.class);
+            gotoAccountSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
+            startActivity(gotoAccountSetting);
             return true;
         }
 
-        if (drawerToggle.onOptionsItemSelected(item)) {
+        /*if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -126,5 +125,5 @@ public class HomeHistoryActivity extends BaseActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
-    }
+    }*/
 }

@@ -64,7 +64,8 @@
                     android:textSize="17sp"
                     android:id="@+id/history_telephone"
                     android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@+id/history_item_photo"/>
+                    android:layout_toRightOf="@+id/history_item_photo"
+                    android:autoLink="phone"/>
 
                 <TextView
                     android:layout_width="match_parent"

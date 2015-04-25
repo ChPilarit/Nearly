@@ -35,8 +35,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     public final static String TRACKER_SETTING_ID = "TRACKER_SETTING_ID";
 
-    private DrawerLayout homeDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+   //private DrawerLayout homeDrawerLayout;
+   //private ActionBarDrawerToggle mDrawerToggle;
     private ActionButton homeImvAdd;
     private ListView homeLvTracklist;
     private TrackListAdapter trackListAdapter;
@@ -54,7 +54,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void initView() {
-        setUpDrawerLayout();
+        //setUpDrawerLayout();
 
         homeLvTracklist = (ListView) findViewById(R.id.home_lv_tracklist);
         setUpTrackListAdapter();
@@ -88,17 +88,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void setUpDrawerLayout() {
-        homeDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawer_layout);
+        /*homeDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, homeDrawerLayout,
                 R.drawable.ic_action_reorder, R.string.hello_world, R.string.tracker) {
 
-            /** Called when a drawer has settled in a completely closed state. */
+            *//** Called when a drawer has settled in a completely closed state. *//*
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
-            /** Called when a drawer has settled in a completely open state. */
+            *//** Called when a drawer has settled in a completely open state. *//*
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -106,7 +106,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         };
 
         // Set the drawer toggle as the DrawerListener
-        homeDrawerLayout.setDrawerListener(mDrawerToggle);
+        homeDrawerLayout.setDrawerListener(mDrawerToggle);*/
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -119,7 +119,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         setUpTrackListAdapter();
     }
 
-    @Override
+    /*@Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -130,7 +130,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+    }*/
 
 
     @Override
@@ -149,12 +149,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent gotoAccountSetting = new Intent(this, AccountActivity.class);
+            gotoAccountSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
+            startActivity(gotoAccountSetting);
             return true;
         }
 
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        /*if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

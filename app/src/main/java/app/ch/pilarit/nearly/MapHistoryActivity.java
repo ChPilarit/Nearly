@@ -110,7 +110,7 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
 
         MarkerOptions marker = new MarkerOptions()
                 .position(latLng)
-                .title(String.format("%s : %s", historySms.getName(), GlobalUtil.replacePhoneStr(historySms.getTelephone())))
+                .title(String.format("%s : ", historySms.getName()))
                 .snippet(addressBuffer.toString());
 
         this.googleMap.setInfoWindowAdapter(this);
@@ -204,9 +204,11 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
     public View getInfoContents(Marker marker) {
         View v = getLayoutInflater().inflate(R.layout.marker_info, null);
         TextView title = (TextView) v.findViewById(R.id.title);
+        TextView telephone = (TextView) v.findViewById(R.id.telephone);
         TextView info = (TextView) v.findViewById(R.id.info);
         title.setText(marker.getTitle());
         info.setText(marker.getSnippet());
+        telephone.setText(GlobalUtil.replacePhoneStr(historySms.getTelephone()));
         return v;
     }
 }

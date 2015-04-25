@@ -16,6 +16,7 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
+import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.validate.EmailValidator;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 
@@ -28,12 +29,21 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     private Button accountBtnSave;
     private EditText accountEdtEmail;
     private EmailValidator emailValidator;
+    private SessionLocal sessionLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        loadData();
         initView();
+    }
+
+    private void loadData() {
+        String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
+        if(KeyGlobal.HOME_ACTIVITY.equals(fromActivity) || KeyGlobal.HOME_HISTORY_ACTIVITY.equals(fromActivity)){
+            sessionLocal = SessionLocal.getInstance(this);
+        }
     }
 
     private void initView() {
@@ -43,6 +53,13 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         accountEdtEmail = (EditText) findViewById(R.id.account_edt_email);
         accountBtnSave = (Button) findViewById(R.id.account_btn_save);
         accountBtnSave.setOnClickListener(this);
+
+        if(sessionLocal!=null && sessionLocal.hasSession()){
+            accountEdtUsername.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_USERNAME)));
+            accountEdtPassword.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_PASSWORD)));
+            accountEdtRepassword.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_PASSWORD)));
+            accountEdtEmail.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_EMAIL)));
+        }
     }
 
     @Override
@@ -65,6 +82,8 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.ROLE_ACTIVITY);
             startActivity(gotoLogin);
             finish();
+        }else{
+            onBackPressed();
         }
     }
 
@@ -73,7 +92,12 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         String password = accountEdtPassword.getText().toString();
         String repassword = accountEdtRepassword.getText().toString();
         String email = accountEdtEmail.getText().toString();
-        int roleId = getIntent().getIntExtra(KeyAccount.ROLE_ID, 0);
+        int roleId = 0;
+        if(sessionLocal != null && sessionLocal.hasSession()){
+            roleId = Integer.valueOf(String.valueOf(sessionLocal.get(KeyAccount.ROLE_ID)));
+        }else{
+            roleId = getIntent().getIntExtra(KeyAccount.ROLE_ID, 0);
+        }
 
         Map accountMap = new HashMap<String, Object>();
         accountMap.put(KeyAccount.AUTHEN_USERNAME, username);
