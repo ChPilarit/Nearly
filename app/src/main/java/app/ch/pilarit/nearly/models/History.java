@@ -18,6 +18,8 @@ public class History extends SugarRecord<History>{
     String date;
     String deviceid;
 
+    String address;
+
 
     public History(){
 
@@ -81,4 +83,11 @@ public class History extends SugarRecord<History>{
         this.deviceid = deviceid;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

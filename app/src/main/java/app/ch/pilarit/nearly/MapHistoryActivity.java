@@ -4,38 +4,45 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.software.shell.fab.ActionButton;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
-import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.models.History;
 
-public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener, GoogleMap.SnapshotReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMapLoadedCallback {
+public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener, GoogleMap.SnapshotReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMapLoadedCallback, GoogleMap.InfoWindowAdapter {
 
     private GoogleMap googleMap;
     private ActionButton mapImvMyLocation;
     private LatLng latLng = null;
     private History historySms = null;
+    private Address address = null;
     private ProgressDialog progressDialog;
+    private StringBuffer addressBuffer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,15 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
         if(historyid == 0) return;
         historySms = History.findById(History.class, historyid);
         latLng = new LatLng(Double.valueOf(historySms.getLat()), Double.valueOf(historySms.getLng()));
+
+        try {
+            Geocoder gcd = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses = gcd.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            if (addresses.size() > 0) address = addresses.get(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initView() {
@@ -82,7 +98,17 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
         this.googleMap.setOnMyLocationChangeListener(this);
         this.googleMap.setOnMapLoadedCallback(this);
         if(latLng == null) return;
-        MarkerOptions marker = new MarkerOptions().position(latLng).title(historySms.getName()).snippet(GlobalUtil.replacePhoneStr(historySms.getTelephone()));
+
+        addressBuffer = new StringBuffer();
+        if(address != null){
+            for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                addressBuffer.append(address.getAddressLine(i));
+                addressBuffer.append("\n");
+            }
+        }
+
+        MarkerOptions marker = new MarkerOptions().position(latLng).title(historySms.getName()).snippet(addressBuffer.toString());
+        this.googleMap.setInfoWindowAdapter(this);
         this.googleMap.addMarker(marker).showInfoWindow();
         this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.DEFAULT_ZOOM));
     }
@@ -115,6 +141,7 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
 
         bitmap = ImageUtil.scaleDownBitmap(bitmap, 200, this);
         historySms.setMapphoto(ImageUtil.getStringBase64(bitmap));
+        if(addressBuffer != null && addressBuffer.length() > 0) historySms.setAddress(addressBuffer.toString());
         historySms.save();
 
     }
@@ -161,5 +188,20 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
         super.onBackPressed();
         overridePendingTransition(R.anim.in_trans_left_right, R.anim.out_trans_right_left);
         finish();
+    }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        View v = getLayoutInflater().inflate(R.layout.marker_info, null);
+        TextView title = (TextView) v.findViewById(R.id.title);
+        TextView info = (TextView) v.findViewById(R.id.info);
+        title.setText(marker.getTitle());
+        info.setText(marker.getSnippet());
+        return v;
     }
 }

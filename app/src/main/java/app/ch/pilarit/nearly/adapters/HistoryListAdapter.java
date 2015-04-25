@@ -12,11 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import app.ch.pilarit.nearly.MapHistoryActivity;
 import app.ch.pilarit.nearly.R;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.utils.DateUtil;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
@@ -58,7 +60,7 @@ public class HistoryListAdapter extends BaseAdapter{
         TextView  historyItemTelephone;
         TextView  historyItemDate;
         CardView  historyItemCardview;
-
+        TextView  historyItemAddress;
     }
 
 
@@ -76,6 +78,7 @@ public class HistoryListAdapter extends BaseAdapter{
             viewItemHolder.historyItemTelephone = (TextView)view.findViewById(R.id.history_telephone);
             viewItemHolder.historyItemDate = (TextView)view.findViewById(R.id.history_date);
             viewItemHolder.historyItemCardview = (CardView)view.findViewById(R.id.history_item_cardview);
+            viewItemHolder.historyItemAddress = (TextView)view.findViewById(R.id.history_item_address);
 
             view.setTag(viewItemHolder);
         }else {
@@ -93,9 +96,13 @@ public class HistoryListAdapter extends BaseAdapter{
             viewItemHolder.historyItemPhoto.setImageBitmap(ImageUtil.getBitmapBase64(history.getMapphoto()));
         }
 
+        if(history.getAddress() != null && history.getAddress().length() > 0) {
+            viewItemHolder.historyItemAddress.setText(history.getAddress());
+        }
+
         viewItemHolder.historyItemName.setText(history.getName());
         viewItemHolder.historyItemTelephone.setText(GlobalUtil.replacePhoneStr(history.getTelephone()));
-        viewItemHolder.historyItemDate.setText(history.getDate());
+        viewItemHolder.historyItemDate.setText(DateUtil.dateFormat(history.getDate()));
         viewItemHolder.historyItemCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

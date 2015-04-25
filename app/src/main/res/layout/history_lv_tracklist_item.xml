@@ -18,7 +18,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="150dp"
             android:background="@drawable/bg_press">
 
             <ImageView
@@ -34,7 +34,7 @@
                 android:id="@+id/history_item_time"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/history_item_photo"
                 android:layout_margin="5dp">
 
@@ -43,9 +43,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:text="@string/history_date"
+                    android:textColor="@color/black"
                     android:layout_gravity="right"
                     android:layout_toRightOf="@+id/history_item_photo"
-                    android:id="@+id/history_date" />
+                    android:id="@+id/history_date"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
                     android:text="@string/history_name"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/history_item_name"
-                    android:padding="@dimen/margin_10_dp"
+                    android:textStyle="bold"
                     android:layout_toRightOf="@+id/history_item_photo"/>
 
                 <TextView
@@ -62,19 +63,18 @@
                     android:text="@string/history_telephone"
                     android:textSize="17sp"
                     android:id="@+id/history_telephone"
-                    android:padding="@dimen/margin_10_dp"
+                    android:layout_marginTop="3dp"
                     android:layout_toRightOf="@+id/history_item_photo"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="@string/history_address"
-                    android:textSize="17sp"
-                    android:id="@+id/history_address"
-                    android:padding="@dimen/margin_10_dp"
+                    android:id="@+id/history_item_address"
+                    android:layout_marginTop="3dp"
                     android:textColor="@color/black"
-                    android:layout_toRightOf="@+id/history_item_photo"/>
-
+                    android:layout_toRightOf="@+id/history_item_photo"
+                    android:maxLines="2"/>
 
             </LinearLayout>
 
