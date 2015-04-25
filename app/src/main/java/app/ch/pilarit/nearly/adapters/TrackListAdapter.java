@@ -1,5 +1,6 @@
 package app.ch.pilarit.nearly.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -23,6 +24,8 @@ import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.db.DbBitmapUtility;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
+import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
+import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 import app.ch.pilarit.nearly.models.TrackSetting;
 
 /**
@@ -87,7 +90,7 @@ public class TrackListAdapter extends BaseAdapter {
         return view;
     }
 
-    private void initView(int i, final TrackSetting trackSetting, ViewItemHolder viewItemHolder) {
+    private void initView(final int position, final TrackSetting trackSetting, ViewItemHolder viewItemHolder) {
 
         viewItemHolder.tracklistItemActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -105,6 +108,42 @@ public class TrackListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 gotoTrackerSetting(trackSetting);
+            }
+        });
+
+            viewItemHolder.tracklistItemCardview.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    doConfirmDelete(position,trackSetting);
+                    return false;
+                }
+            });
+    }
+
+    private void doConfirmDelete(final int position, final TrackSetting trackSetting) {
+
+        String title = context.getResources().getString(R.string.history_dialog_title);
+        String question = context.getResources().getString(R.string.histroy_dialog_question);
+
+        new DialogComfirm(context).show(title,R.drawable.ic_action_tick,question,new DialogInterface() {
+            @Override
+            public void ok(Dialog dialog) {
+
+                trackSetting.delete();
+                trackSettingList.remove(position);
+
+                notifyDataSetChanged();
+
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void cancel(Dialog dialog) {
+
+                dialog.dismiss();
+
             }
         });
     }
