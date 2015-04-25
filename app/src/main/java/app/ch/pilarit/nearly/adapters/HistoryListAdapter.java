@@ -2,7 +2,9 @@ package app.ch.pilarit.nearly.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.orm.SugarRecord;
-
 import java.util.List;
 
+import app.ch.pilarit.nearly.MapHistoryActivity;
 import app.ch.pilarit.nearly.R;
+import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
+import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 import app.ch.pilarit.nearly.models.History;
@@ -85,24 +89,27 @@ public class HistoryListAdapter extends BaseAdapter{
     }
 
     private void initView(final int position, final History history, ViewItemHolder viewItemHolder) {
+        if(history.getMapphoto() != null && history.getMapphoto().length() > 0) {
+            viewItemHolder.historyItemPhoto.setImageBitmap(ImageUtil.getBitmapBase64(history.getMapphoto()));
+        }
 
         viewItemHolder.historyItemName.setText(history.getName());
-        viewItemHolder.historyItemTelephone.setText(history.getTelephone());
+        viewItemHolder.historyItemTelephone.setText(GlobalUtil.replacePhoneStr(history.getTelephone()));
         viewItemHolder.historyItemDate.setText(history.getDate());
         viewItemHolder.historyItemCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent gotoMapHistory = new Intent(context, MapHistoryActivity.class);
+                gotoMapHistory.putExtra(KeyGlobal.SMS_ID, history.getId());
+                gotoMapHistory.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
+                context.startActivity(gotoMapHistory);
             }
         });
 
         viewItemHolder.historyItemCardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
                 doConfirmDelete(position,history);
-
-
                 return false;
             }
         });

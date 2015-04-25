@@ -21,7 +21,6 @@ import app.ch.pilarit.nearly.HomeActivity;
 import app.ch.pilarit.nearly.R;
 import app.ch.pilarit.nearly.TrackerActivity;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
-import app.ch.pilarit.nearly.libs.db.DbBitmapUtility;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
@@ -103,7 +102,7 @@ public class TrackListAdapter extends BaseAdapter {
         viewItemHolder.tracklistItemName.setText(trackSetting.getName());
         viewItemHolder.tracklistItemStartTime.setText(trackSetting.getStarttime());
         viewItemHolder.tracklistItemEndTime.setText(trackSetting.getEndtime());
-        viewItemHolder.tracklistItemPhoto.setImageBitmap(DbBitmapUtility.getBitmapBase64(trackSetting.getMapphoto()));
+        viewItemHolder.tracklistItemPhoto.setImageBitmap(ImageUtil.getBitmapBase64(trackSetting.getMapphoto()));
         viewItemHolder.tracklistItemCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

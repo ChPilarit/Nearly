@@ -32,9 +32,9 @@ import java.util.List;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
-import app.ch.pilarit.nearly.libs.db.DbBitmapUtility;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.TrackSetting;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -85,12 +85,12 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
             //cachemap = (Bitmap) getIntent().getParcelableExtra(MapActivity.KEY_CACHE_MAP);
             if(SessionLocal.getInstance(this).hasKey(MapActivity.KEY_CACHE_MAP)) {
                 String cachemapStr = String.valueOf(SessionLocal.getInstance(this).get(MapActivity.KEY_CACHE_MAP));
-                cachemap = (Bitmap) DbBitmapUtility.getBitmapBase64(cachemapStr);
+                cachemap = (Bitmap) ImageUtil.getBitmapBase64(cachemapStr);
             }
         }else{
             long id = getIntent().getLongExtra(HomeActivity.TRACKER_SETTING_ID, 0);
             trackSetting = TrackSetting.findById(TrackSetting.class, id);
-            cachemap = DbBitmapUtility.getBitmapBase64(trackSetting.getMapphoto());
+            cachemap = ImageUtil.getBitmapBase64(trackSetting.getMapphoto());
             polygon = Map.stringPolygonToPolygon(trackSetting.getPolygon());
         }
     }
@@ -208,7 +208,7 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         trackSetting.setDayofweek(daysOfweek);
 
         if(cachemap != null) {
-            trackSetting.setMapphoto(DbBitmapUtility.getStringBase64(cachemap));
+            trackSetting.setMapphoto(ImageUtil.getStringBase64(cachemap));
         }else{
             trackSetting.setMapphoto("");
         }
@@ -387,7 +387,7 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
                 //cachemap = (Bitmap) data.getParcelableExtra(MapActivity.KEY_CACHE_MAP);
                 if(SessionLocal.getInstance(this).hasKey(MapActivity.KEY_CACHE_MAP)) {
                     String cachemapStr = String.valueOf(SessionLocal.getInstance(this).get(MapActivity.KEY_CACHE_MAP));
-                    cachemap = (Bitmap) DbBitmapUtility.getBitmapBase64(cachemapStr);
+                    cachemap = (Bitmap) ImageUtil.getBitmapBase64(cachemapStr);
                 }
                 trackerImvMap.setImageBitmap(cachemap);
             }

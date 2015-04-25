@@ -1,24 +1,21 @@
 package app.ch.pilarit.nearly;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.HistoryListAdapter;
+import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.models.History;
 
 public class HomeHistoryActivity extends BaseActivity {
@@ -37,15 +34,25 @@ public class HomeHistoryActivity extends BaseActivity {
 
     private void initView() {
         setUpDrawerLayout();
-
-        List<History> historyList;
-        historyList = History.listAll(History.class);
-
-
         historyLvTracklist = (ListView)findViewById(R.id.history_lv_tracklist);
+        setUpHistoryListAdapter();
+        checkSMSReceive();
+    }
+
+    private void setUpHistoryListAdapter() {
+        List<History> historyList = History.listAll(History.class);
         historyListAdapter = new HistoryListAdapter(this,historyList);
         historyLvTracklist.setAdapter(historyListAdapter);
+    }
 
+    private void checkSMSReceive() {
+        String from = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
+        if(KeyGlobal.SMS_RECEIVER.equals(from)) {
+            Intent gotoMapHistory = new Intent(this, MapHistoryActivity.class);
+            gotoMapHistory.putExtra(KeyGlobal.SMS_ID, getIntent().getLongExtra(KeyGlobal.SMS_ID, 0));
+            gotoMapHistory.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
+            startActivity(gotoMapHistory);
+        }
     }
 
     private void setUpDrawerLayout() {
@@ -73,6 +80,11 @@ public class HomeHistoryActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpHistoryListAdapter();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,6 +105,23 @@ public class HomeHistoryActivity extends BaseActivity {
             return true;
         }
 
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 }

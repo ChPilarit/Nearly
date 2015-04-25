@@ -24,6 +24,7 @@ import java.util.List;
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.TrackListAdapter;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.TrackSetting;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -61,7 +62,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         homeImvAdd = (ActionButton) findViewById(R.id.home_imv_add);
         homeImvAdd.setOnClickListener(this);
 
-        setDefaultSMS();
+        GlobalUtil.setDefaultSMS(this);
     }
 
     private void setUpTrackListAdapter() {
@@ -115,23 +116,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
-        if(trackListAdapter!=null) {
-            trackListAdapter.notifyDataSetChanged();
-        }
-    }
-
-    private void setDefaultSMS() {
-        // Android 4.4 and up
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            final String myPackageName = getPackageName();
-            if (!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
-                // App is not default.
-                // Show the "not currently set as the default SMS app" interface
-                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
-                startActivity(intent);
-            }
-        }
+        setUpTrackListAdapter();
     }
 
     @Override

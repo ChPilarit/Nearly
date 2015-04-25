@@ -9,5 +9,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_tracker">TrackerActivity</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_map_history">MapHistoryActivity</string>
 
 </resources>
