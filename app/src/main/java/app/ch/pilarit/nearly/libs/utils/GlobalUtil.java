@@ -17,6 +17,7 @@ import java.util.Map;
 
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
+import app.ch.pilarit.nearly.models.History;
 import app.ch.pilarit.nearly.services.GPSTracking;
 
 /**
@@ -47,7 +48,7 @@ public class GlobalUtil {
             String deviceid = "";
             String datetime = "";
             String lat = "";
-            String lmg = "";
+            String lng = "";
 
             for (int i = 0; i < sms.length; i++) {
 
@@ -56,7 +57,7 @@ public class GlobalUtil {
                 deviceid = "";
                 datetime = "";
                 lat = "";
-                lmg = "";
+                lng = "";
                 smsMessageStr.setLength(0);
 
                 smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
@@ -71,7 +72,15 @@ public class GlobalUtil {
                 deviceid = historySms.getString(KeyGlobal.SMS_DEVIVE_ID);
                 datetime = historySms.getString(KeyGlobal.SMS_DATETIME);
                 lat = historySms.getString(KeyGlobal.SMS_LAT);
-                lmg = historySms.getString(KeyGlobal.SMS_LNG);
+                lng = historySms.getString(KeyGlobal.SMS_LNG);
+
+                History history = new History();
+                history.setDate(datetime);
+                history.setName(name);
+                history.setDeviceid(deviceid);
+                history.setTelephone(telephone);
+                history.setLat(lat);
+                history.setLng(lng);
 
                 smsMessageStr.append("SMS From: " + telephone + "\n");
                 smsMessageStr.append(smsBody + "\n");

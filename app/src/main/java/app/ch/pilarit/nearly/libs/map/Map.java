@@ -1,5 +1,6 @@
 package app.ch.pilarit.nearly.libs.map;
 
+import android.location.Location;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -29,6 +30,8 @@ public class Map {
 
         return stringBuffer.toString();
     }
+
+
 
     public static List<LatLng> stringPolygonToPolygon(String polygonStr){
         if(poligonList == null) poligonList = new ArrayList<LatLng>();
@@ -95,6 +98,10 @@ public class Map {
         centroid[1] = centroid[1] / totalPoints;
 
         return new LatLng(centroid[0], centroid[1]);
+    }
+
+    public static LatLng convertLocationToLatLng(Location location) {
+        return new LatLng(location.getLatitude(), location.getLongitude());
     }
 
 }

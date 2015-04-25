@@ -50,6 +50,18 @@
             fab:image="@drawable/ic_action_edit"
             fab:image_size="30dp"/>
 
+        <com.software.shell.fab.ActionButton
+            android:id="@+id/map_imv_mylocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/map_imv_edit"
+            android:layout_marginLeft="@dimen/fab_margin"
+            fab:type="DEFAULT"
+            fab:button_color="@color/white"
+            fab:button_colorPressed="@color/gray"
+            fab:image="@drawable/ic_action_my_location"
+            fab:image_size="30dp"/>
+
     </RelativeLayout>
 
     <Button

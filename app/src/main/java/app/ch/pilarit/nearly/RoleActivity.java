@@ -55,7 +55,6 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
 
         switch (view.getId()){
             case R.id.role_btn_follower:{
-                Boast.makeText(this, "Coming Soon.").show();
                 doConfirmRole(KeyAccount.ROLE_FOLLOWER);
                 break;
             }

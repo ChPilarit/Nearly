@@ -4,31 +4,31 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.software.shell.fab.ActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,10 +43,11 @@ import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import static android.view.View.OnClickListener;
 
 
-public class MapActivity extends FragmentActivity implements OnClickListener, OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.SnapshotReadyCallback {
+public class MapActivity extends FragmentActivity implements OnClickListener, OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.SnapshotReadyCallback, GoogleMap.OnMyLocationChangeListener {
 
     public final static String KEY_POLYGON = "KEY_POLYGON";
     public final static String KEY_CACHE_MAP = "KEY_CACHE_MAP";
+    public final static float DEFAULT_ZOOM = 17.0f;
 
     private ActionButton mapImvEdit;
     private ActionButton mapImvDelete;
@@ -55,10 +56,14 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     private PolygonOptions polygonOptions;
     private Polygon polygon;
     private Marker marker;
+    private GoogleApiClient mGoogleApiClient;
+    private boolean hasEnter;
+    private ActionButton mapImvMyLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
         overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
         setContentView(R.layout.activity_map);
@@ -66,15 +71,18 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     }
 
     private void initView() {
+        hasEnter = false;
         SessionLocal.getInstance(this).remove(KEY_CACHE_MAP);
         setUpMap();
 
         mapImvEdit = (ActionButton) findViewById(R.id.map_imv_edit);
+        mapImvMyLocation = (ActionButton) findViewById(R.id.map_imv_mylocation);
         mapImvDelete = (ActionButton) findViewById(R.id.map_imv_delete);
         mapSaveBtn = (Button) findViewById(R.id.map_save_btn);
 
         mapImvEdit.setTag(false);
         mapImvEdit.setOnClickListener(this);
+        mapImvMyLocation.setOnClickListener(this);
         mapImvDelete.setOnClickListener(this);
         mapSaveBtn.setOnClickListener(this);
     }
@@ -102,7 +110,16 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
                 doSave();
                 break;
             }
+            case R.id.map_imv_mylocation:{
+                doSetMyLocation();
+                break;
+            }
         }
+    }
+
+    private void doSetMyLocation() {
+        if(googleMap.getMyLocation() == null) return;
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.convertLocationToLatLng(googleMap.getMyLocation()), DEFAULT_ZOOM));
     }
 
     private void doSave() {
@@ -167,6 +184,9 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         this.googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         this.googleMap.setOnMapClickListener(this);
         this.googleMap.getUiSettings().setMapToolbarEnabled(false);
+        this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        this.googleMap.setMyLocationEnabled(true);
+        this.googleMap.setOnMyLocationChangeListener(this);
 
         setUpStylePolygon();
         checkFromTrackerActivity();
@@ -185,15 +205,23 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
             int totalPoint = latLngList.size();
             int i = 0;
             LatLng latLng;
+
+            final LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (i = 0; i < totalPoint-1; i++){
                 latLng = latLngList.get(i);
                 this.googleMap.clear();
                 marker = googleMap.addMarker(new MarkerOptions().position(latLng));
                 polygon = googleMap.addPolygon(polygonOptions.add(latLng));
+                builder.include(latLng);
             }
+            builder.include(latLngList.get(totalPoint-1));
+            final LatLngBounds bounds = builder.build();
 
-            this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.centroid(latLngList), this.googleMap.getCameraPosition().zoom));
+            this.googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 400, 800, 5));
+            //this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.centroid(latLngList), this.googleMap.getCameraPosition().zoom));
             marker.setVisible(false);
+        }else{
+            doSetMyLocation();
         }
     }
 
@@ -231,9 +259,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     }
 
     private void doDelete() {
-        polygon = null;
-        marker.remove();
-        googleMap.clear();
+        if(marker != null) marker.remove();
+        if(googleMap != null) googleMap.clear();
         setUpStylePolygon();
     }
 
@@ -267,4 +294,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         finish();
     }
 
+    @Override
+    public void onMyLocationChange(Location location) {
+    }
 }
