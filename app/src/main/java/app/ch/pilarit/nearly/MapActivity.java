@@ -4,12 +4,10 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +18,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -34,7 +31,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import app.ch.pilarit.nearly.keys.KeyGlobal;
-import app.ch.pilarit.nearly.libs.db.DbBitmapUtility;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
@@ -56,8 +52,6 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     private PolygonOptions polygonOptions;
     private Polygon polygon;
     private Marker marker;
-    private GoogleApiClient mGoogleApiClient;
-    private boolean hasEnter;
     private ActionButton mapImvMyLocation;
 
     @Override
@@ -71,7 +65,6 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     }
 
     private void initView() {
-        hasEnter = false;
         SessionLocal.getInstance(this).remove(KEY_CACHE_MAP);
         setUpMap();
 
@@ -159,7 +152,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         Intent gotoTrackerSetting = new Intent(this, TrackerActivity.class);
         gotoTrackerSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.MAP_ACTIVITY);
         gotoTrackerSetting.putExtra(KEY_POLYGON, Map.polygonToStringPolygon(polygon.getPoints()));
-        String cachemapStr = DbBitmapUtility.getStringBase64(ImageUtil.scaleDownBitmap(bitmap, 200, this));
+        String cachemapStr = ImageUtil.getStringBase64(ImageUtil.scaleDownBitmap(bitmap, 200, this));
         SessionLocal.getInstance(this).put(KEY_CACHE_MAP, cachemapStr);
         //gotoTrackerSetting.putExtra(KEY_CACHE_MAP, ImageUtil.scaleDownBitmap(bitmap, 200, this));
 

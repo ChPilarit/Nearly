@@ -154,15 +154,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         switch (rolid){
             case KeyAccount.ROLE_TRACKER:{
                 gotoHome = new Intent(this, HomeActivity.class);
+                gotoHome.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
                 break;
             }
             case KeyAccount.ROLE_FOLLOWER:{
                 gotoHome = new Intent(this, HomeHistoryActivity.class);
+                String from = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
+                if(KeyGlobal.SMS_RECEIVER.equals(from)) {
+                    gotoHome.putExtra(KeyGlobal.SMS_ID, getIntent().getLongExtra(KeyGlobal.SMS_ID, 0));
+                    gotoHome.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.SMS_RECEIVER);
+                }else{
+                    gotoHome.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
+                }
                 break;
             }
         }
 
-        gotoHome.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
         startActivity(gotoHome);
         finish();
     }

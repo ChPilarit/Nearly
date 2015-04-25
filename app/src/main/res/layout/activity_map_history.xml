@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.ch.pilarit.nearly.MapHistoryActivity"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+    <fragment
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/googlemap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.software.shell.fab.ActionButton
+        android:id="@+id/map_imv_mylocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/fab_margin"
+        fab:type="DEFAULT"
+        fab:button_color="@color/white"
+        fab:button_colorPressed="@color/gray"
+        fab:image="@drawable/ic_action_my_location"
+        fab:image_size="30dp"
+        android:padding="5dp"/>
+
+</RelativeLayout>

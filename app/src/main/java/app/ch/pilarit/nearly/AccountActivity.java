@@ -62,7 +62,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
         if(KeyGlobal.ROLE_ACTIVITY.equals(fromActivity)){
             Intent gotoLogin = new Intent(this, LoginActivity.class);
-            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.ACCOUNT_ACTIVITY);
+            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.ROLE_ACTIVITY);
             startActivity(gotoLogin);
             finish();
         }
