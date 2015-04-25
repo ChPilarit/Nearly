@@ -21,7 +21,7 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.HistoryListAdapter;
 import app.ch.pilarit.nearly.models.History;
 
-public class HomeHistoryActivity extends BaseActivity implements View.OnClickListener {
+public class HomeHistoryActivity extends BaseActivity {
 
     private DrawerLayout historyDrawerLayout;
     private ListView historyLvTracklist;
@@ -94,10 +94,5 @@ public class HomeHistoryActivity extends BaseActivity implements View.OnClickLis
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }
