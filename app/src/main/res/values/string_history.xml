@@ -5,6 +5,7 @@
     <string name="history_name">Name</string>
     <string name="history_date">Date</string>
     <string name="history_telephone">Telephone</string>
+    <string name="history_address">Address</string>
     <string name="history_dialog_title">Delete</string>
     <string name="histroy_dialog_question">Are you sure to delete?</string>
 

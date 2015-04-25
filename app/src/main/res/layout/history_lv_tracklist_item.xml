@@ -52,7 +52,7 @@
                     android:text="@string/history_name"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/history_item_name"
-                    android:layout_marginRight="5dp"
+                    android:padding="@dimen/margin_10_dp"
                     android:layout_toRightOf="@+id/history_item_photo"/>
 
                 <TextView
@@ -61,7 +61,17 @@
                     android:text="@string/history_telephone"
                     android:textSize="17sp"
                     android:id="@+id/history_telephone"
-                    android:layout_marginRight="5dp"
+                    android:padding="@dimen/margin_10_dp"
+                    android:layout_toRightOf="@+id/history_item_photo"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/history_address"
+                    android:textSize="17sp"
+                    android:id="@+id/history_address"
+                    android:padding="@dimen/margin_10_dp"
+                    android:textColor="@color/gray"
                     android:layout_toRightOf="@+id/history_item_photo"/>
 
 
