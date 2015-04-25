@@ -72,7 +72,7 @@
                     android:textSize="17sp"
                     android:id="@+id/history_address"
                     android:padding="@dimen/margin_10_dp"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     android:layout_toRightOf="@+id/history_item_photo"/>
 
 
