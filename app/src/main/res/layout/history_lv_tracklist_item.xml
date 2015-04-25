@@ -73,8 +73,9 @@
                     android:id="@+id/history_item_address"
                     android:layout_marginTop="3dp"
                     android:textColor="@color/black"
+                    android:ellipsize="end"
                     android:layout_toRightOf="@+id/history_item_photo"
-                    android:maxLines="2"/>
+                    android:maxLines="3"/>
 
             </LinearLayout>
 

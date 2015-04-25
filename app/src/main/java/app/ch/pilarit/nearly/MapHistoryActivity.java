@@ -31,6 +31,7 @@ import java.util.TimerTask;
 
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
+import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.models.History;
 
@@ -107,7 +108,11 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
             }
         }
 
-        MarkerOptions marker = new MarkerOptions().position(latLng).title(historySms.getName()).snippet(addressBuffer.toString());
+        MarkerOptions marker = new MarkerOptions()
+                .position(latLng)
+                .title(String.format("%s : %s", historySms.getName(), GlobalUtil.replacePhoneStr(historySms.getTelephone())))
+                .snippet(addressBuffer.toString());
+
         this.googleMap.setInfoWindowAdapter(this);
         this.googleMap.addMarker(marker).showInfoWindow();
         this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.DEFAULT_ZOOM));
