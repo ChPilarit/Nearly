@@ -1,5 +1,6 @@
 package app.ch.pilarit.nearly.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -9,9 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
 import app.ch.pilarit.nearly.R;
+import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
+import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 import app.ch.pilarit.nearly.models.History;
 
 
@@ -79,11 +84,47 @@ public class HistoryListAdapter extends BaseAdapter{
         return view;
     }
 
-    private void initView(int i, History history, ViewItemHolder viewItemHolder) {
+    private void initView(final int position, final History history, ViewItemHolder viewItemHolder) {
 
+        viewItemHolder.historyItemName.setText(history.getName());
+        viewItemHolder.historyItemTelephone.setText(history.getTelephone());
+        viewItemHolder.historyItemDate.setText(history.getDate());
         viewItemHolder.historyItemCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            }
+        });
+
+        viewItemHolder.historyItemCardview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                doConfirmDelete(position,history);
+
+
+                return false;
+            }
+        });
+    }
+
+    private void doConfirmDelete(final int position, final History history) {
+        String title = "Delete history";
+        String question = "Are you sure you want to delete?";
+        new DialogComfirm(context).show(title,R.drawable.ic_action_tick,question,new DialogInterface() {
+            @Override
+            public void ok(Dialog dialog) {
+                history.delete();
+                historyList.remove(position);
+                notifyDataSetChanged();
+
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void cancel(Dialog dialog) {
+                dialog.dismiss();
 
             }
         });
