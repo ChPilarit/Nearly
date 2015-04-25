@@ -21,7 +21,7 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.HistoryListAdapter;
 import app.ch.pilarit.nearly.models.History;
 
-public class HomeHistoryActivity extends BaseActivity {
+public class HomeHistoryActivity extends BaseActivity implements View.OnClickListener {
 
     private DrawerLayout historyDrawerLayout;
     private ListView historyLvTracklist;
@@ -31,7 +31,7 @@ public class HomeHistoryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_home_history);
         initView();
     }
 
@@ -94,5 +94,10 @@ public class HomeHistoryActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
