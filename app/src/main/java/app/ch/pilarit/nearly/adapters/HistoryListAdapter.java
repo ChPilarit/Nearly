@@ -109,8 +109,8 @@ public class HistoryListAdapter extends BaseAdapter{
     }
 
     private void doConfirmDelete(final int position, final History history) {
-        String title = "Delete history";
-        String question = "Are you sure you want to delete?";
+        String title = context.getResources().getString(R.string.history_dialog_title);
+        String question = context.getResources().getString(R.string.histroy_dialog_question);
         new DialogComfirm(context).show(title,R.drawable.ic_action_tick,question,new DialogInterface() {
             @Override
             public void ok(Dialog dialog) {
