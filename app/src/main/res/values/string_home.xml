@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_actionbar">Track List</string>
+    <string name="home_dialog_title">Delete</string>
+    <string name="home_dialog_question">Are you sure to delete?</string>
 </resources>
