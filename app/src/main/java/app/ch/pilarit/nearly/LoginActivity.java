@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
+import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
@@ -136,9 +137,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     loginPassword.setText("");
                     Boast.makeText(this, R.string.login_warn_password_invalid).show();
                 }else {
-                    Intent gotoHome = new Intent(this,HomeActivity.class);
-                    startActivity(gotoHome);
-                    finish();
+                    gotoHome(session);
                 }
                 break;
             }
@@ -146,8 +145,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
+    private void gotoHome(SessionLocal session) {
+        if(!session.hasSession()) return;
 
+        Intent gotoHome = null;
+        int rolid = Integer.valueOf(String.valueOf(session.get(KeyAccount.ROLE_ID)));
 
+        switch (rolid){
+            case KeyAccount.ROLE_TRACKER:{
+                gotoHome = new Intent(this, HomeActivity.class);
+                break;
+            }
+            case KeyAccount.ROLE_FOLLOWER:{
+                gotoHome = new Intent(this, HomeHistoryActivity.class);
+                break;
+            }
+        }
+
+        gotoHome.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
+        startActivity(gotoHome);
+        finish();
+    }
 
 
     @Override

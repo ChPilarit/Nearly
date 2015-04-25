@@ -4,9 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Telephony;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -33,6 +37,9 @@ import app.ch.pilarit.nearly.models.TrackSetting;
  * Created by ch_pilarit on 4/5/15 AD.
  */
 public class GPSTracking extends Service implements LocationListener{
+
+    public final static String SMS_TO = "SMS_TO";
+    public final static String SMS_MSG = "SMS_MSG";
 
     private SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private GPS gps;
@@ -73,13 +80,15 @@ public class GPSTracking extends Service implements LocationListener{
                 trackSetting.save();
                 try {
                     JSONObject smsJson = new JSONObject();
-                    smsJson.put("deviceid" , GlobalUtil.getDeviceId(getApplicationContext()));
-                    smsJson.put("name", trackSetting.getName());
-                    smsJson.put("datetime", datetimeFormat.format(Calendar.getInstance().getTime()));
-                    smsJson.put("lat", location.getLatitude());
-                    smsJson.put("lng", location.getLongitude());
-                    smsJson.put("keyapp", KeyGlobal.KEY_APP);
+                    smsJson.put(KeyGlobal.SMS_DEVIVE_ID , GlobalUtil.getDeviceId(getApplicationContext()));
+                    smsJson.put(KeyGlobal.SMS_NAME, trackSetting.getName());
+                    smsJson.put(KeyGlobal.SMS_DATETIME, datetimeFormat.format(Calendar.getInstance().getTime()));
+                    smsJson.put(KeyGlobal.SMS_LAT, location.getLatitude());
+                    smsJson.put(KeyGlobal.SMS_LNG, location.getLongitude());
+                    smsJson.put(KeyGlobal.SMS_KEYAPP, KeyGlobal.KEY_APP);
                     Log.e("GPSTracking", smsJson.toString());
+
+                    Boast.makeText(getApplicationContext(), "Send SMS to " + trackSetting.getTelephone()).show();
                     GlobalUtil.sendSMS(trackSetting.getTelephone(), smsJson.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();

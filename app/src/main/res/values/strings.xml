@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Nearly</string>
+    <bool name="is_kitkat">false</bool>
+    <bool name="is_pre_kitkat">true</bool>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_account">AccountActivity</string>

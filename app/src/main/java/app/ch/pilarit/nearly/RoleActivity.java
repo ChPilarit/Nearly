@@ -28,10 +28,6 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         validateActivity();
-        /*if(AccountSessionUtil.hasTracker(this)) {
-            Intent gpsTracking = new Intent(this, GPSTracking.class);
-            this.startService(gpsTracking);
-        }*/
         getActionBar().hide();
         setContentView(R.layout.activity_role);
         initView();
@@ -60,7 +56,7 @@ public class RoleActivity extends BaseActivity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.role_btn_follower:{
                 Boast.makeText(this, "Coming Soon.").show();
-                //doConfirmRole(KeyAccount.ROLE_FOLLOWER);
+                doConfirmRole(KeyAccount.ROLE_FOLLOWER);
                 break;
             }
 

@@ -51,18 +51,18 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             case R.id.account_btn_save:{
                 if(validate()){
                     doRegisterAccount();
-                    gotoNextPage();
+                    gotoLogInActivity();
                 }
                 break;
             }
         }
     }
 
-    private void gotoNextPage() {
+    private void gotoLogInActivity() {
         String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
         if(KeyGlobal.ROLE_ACTIVITY.equals(fromActivity)){
             Intent gotoLogin = new Intent(this, LoginActivity.class);
-            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.LOGIN_ACTIVITY);
+            gotoLogin.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.ACCOUNT_ACTIVITY);
             startActivity(gotoLogin);
             finish();
         }

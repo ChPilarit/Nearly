@@ -1,4 +1,4 @@
-package app.ch.pilarit.nearly.recievers;
+package app.ch.pilarit.nearly.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
