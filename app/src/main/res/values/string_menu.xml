@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home_menu_AccountSetting">Account Setting</string>
+    <string name="home_menu_Logout">LogOut</string>
+
+</resources>
