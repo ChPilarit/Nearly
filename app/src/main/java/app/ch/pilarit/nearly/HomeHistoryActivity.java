@@ -16,6 +16,7 @@ import java.util.List;
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.HistoryListAdapter;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.models.History;
 
 public class HomeHistoryActivity extends BaseActivity {
@@ -52,6 +53,8 @@ public class HomeHistoryActivity extends BaseActivity {
             gotoMapHistory.putExtra(KeyGlobal.SMS_ID, getIntent().getLongExtra(KeyGlobal.SMS_ID, 0));
             gotoMapHistory.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
             startActivity(gotoMapHistory);
+        }else{
+            GlobalUtil.setDefaultSMS(this);
         }
     }
 

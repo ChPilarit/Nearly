@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,23 +15,21 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.software.shell.fab.ActionButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import app.ch.pilarit.nearly.R;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.models.History;
 
-public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener, GoogleMap.SnapshotReadyCallback, GoogleMap.OnMyLocationChangeListener {
+public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener, GoogleMap.SnapshotReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMapLoadedCallback {
 
     private GoogleMap googleMap;
     private ActionButton mapImvMyLocation;
@@ -83,12 +80,15 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
         this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         this.googleMap.setMyLocationEnabled(true);
         this.googleMap.setOnMyLocationChangeListener(this);
-
+        this.googleMap.setOnMapLoadedCallback(this);
         if(latLng == null) return;
         MarkerOptions marker = new MarkerOptions().position(latLng).title(historySms.getName()).snippet(GlobalUtil.replacePhoneStr(historySms.getTelephone()));
         this.googleMap.addMarker(marker).showInfoWindow();
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.DEFAULT_ZOOM));
+        this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapActivity.DEFAULT_ZOOM));
+    }
 
+    @Override
+    public void onMapLoaded() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -131,7 +131,7 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
 
     private void doSetMyLocation() {
         if(googleMap.getMyLocation() == null) return;
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(Map.convertLocationToLatLng(googleMap.getMyLocation())));
+        this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Map.convertLocationToLatLng(googleMap.getMyLocation()), MapActivity.DEFAULT_ZOOM));
     }
 
     @Override
@@ -162,5 +162,4 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
         overridePendingTransition(R.anim.in_trans_left_right, R.anim.out_trans_right_left);
         finish();
     }
-
 }

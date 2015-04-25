@@ -53,11 +53,12 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     private Polygon polygon;
     private Marker marker;
     private ActionButton mapImvMyLocation;
+    private boolean hasFocus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        hasFocus = false;
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
         overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
         setContentView(R.layout.activity_map);
@@ -112,7 +113,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
 
     private void doSetMyLocation() {
         if(googleMap.getMyLocation() == null) return;
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.convertLocationToLatLng(googleMap.getMyLocation()), DEFAULT_ZOOM));
+        this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Map.convertLocationToLatLng(googleMap.getMyLocation()), DEFAULT_ZOOM));
     }
 
     private void doSave() {
@@ -210,11 +211,9 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
             builder.include(latLngList.get(totalPoint-1));
             final LatLngBounds bounds = builder.build();
 
-            this.googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 400, 800, 5));
+            this.googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 400, 800, 5));
             //this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.centroid(latLngList), this.googleMap.getCameraPosition().zoom));
             marker.setVisible(false);
-        }else{
-            doSetMyLocation();
         }
     }
 
@@ -289,5 +288,13 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
 
     @Override
     public void onMyLocationChange(Location location) {
+
+        if(!hasFocus){
+            String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
+            if(!KeyGlobal.TRACKER_ACTIVITY.equals(fromActivity)) {
+                this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Map.convertLocationToLatLng(location), DEFAULT_ZOOM));
+                hasFocus = true;
+            }
+        }
     }
 }
