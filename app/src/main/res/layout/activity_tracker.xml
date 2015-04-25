@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tracker_sw_active"
                 android:layout_toRightOf="@id/tracker_imv_map"
+                android:singleLine="true"
                 android:hint="@string/tracker_hint_name"
                 android:id="@+id/tracker_edt_name" />
 
@@ -100,6 +101,7 @@
                 android:layout_marginRight="@dimen/margin_10_dp"
                 android:inputType="phone"
                 android:id="@+id/tracker_edt_telephone"
+                android:singleLine="true"
                 android:hint="@string/tracker_hint_telephone"/>
 
             <LinearLayout
