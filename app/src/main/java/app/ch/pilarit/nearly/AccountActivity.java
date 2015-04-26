@@ -148,9 +148,6 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             return false;
         }
 
-        SendGMailTask sendGMailTask = new SendGMailTask(this);
-        sendGMailTask.execute(new String[]{"test","test", email});
-
         return true;
     }
 

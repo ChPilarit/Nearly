@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -25,7 +26,9 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
+import app.ch.pilarit.nearly.libs.mail.SendGMailTask;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
@@ -47,7 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private ImageButton loginButtonDelete;
     private ImageButton loginButtonOk;
     private EditText loginPassword;
-    private TextView forgotPassword;
+    private TextView loginForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +77,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         loginButton0 = (Button) findViewById(R.id.login_button_0);
         loginButtonDelete = (ImageButton) findViewById(R.id.login_button_delete);
         loginButtonOk = (ImageButton) findViewById(R.id.login_button_ok);
-        forgotPassword = (TextView) findViewById(R.id.login_forgot_password);
-        forgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
-        forgotPassword.setText(Html.fromHtml(getResources().getString(R.string.google_stackoverflow)));
-
+        loginForgotPassword = (TextView) findViewById(R.id.login_forgot_password);
 
         loginTevUserName.setText(username);
         loginButton1.setOnClickListener(this);
@@ -92,14 +92,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         loginButton0.setOnClickListener(this);
         loginButtonDelete.setOnClickListener(this);
         loginButtonOk.setOnClickListener(this);
-
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                doConfirmEmail();
-            }
-        });
+        loginForgotPassword.setOnClickListener(this);
+        loginForgotPassword.setPaintFlags(loginForgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
     }
 
@@ -161,6 +155,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 }
                 break;
             }
+            case R.id.login_forgot_password:{
+                if(NetworkUtils.isNetworkAvailable(this)){
+                    doConfirmEmail();
+                }else{
+                    Boast.makeText(this, R.string.net_warning).show();
+                }
+                break;
+            }
 
         }
 
@@ -170,26 +172,56 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
         String title = getResources().getString(R.string.home_dialog_forgotpassword);
         String question = getResources().getString(R.string.home_dialog_confirmEmail);
-        String email = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_EMAIL));
-        String password = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_PASSWORD));
+        final String email = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_EMAIL));
+        final String password = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_PASSWORD));
 
-        new DialogComfirm(LoginActivity.this).show(title,R.drawable.ic_action_tick,question+email,new DialogInterface() {
+        new DialogComfirm(LoginActivity.this).show(title, R.drawable.ic_action_tick,question+email,new DialogInterface() {
             @Override
             public void ok(Dialog dialog) {
-
-
-
-
+                doSendEmail();
                 dialog.dismiss();
             }
 
             @Override
             public void cancel(Dialog dialog) {
-
                 dialog.dismiss();
-
             }
         });
+
+    }
+
+    private void doSendEmail() {
+        String username = String.valueOf(SessionLocal.getInstance(this).get(KeyAccount.AUTHEN_USERNAME));
+        String password = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_PASSWORD));
+        String roleIdStr = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.ROLE_ID));
+        int roleId = Integer.valueOf(roleIdStr);
+        String roleName = "";
+        switch(roleId){
+            case KeyAccount.ROLE_FOLLOWER:{
+                roleName = getResources().getString(R.string.follower);
+                break;
+            }
+            case KeyAccount.ROLE_TRACKER:{
+                roleName = getResources().getString(R.string.tracker);
+                break;
+            }
+        }
+
+        StringBuffer bodyBuffer = new StringBuffer();
+        bodyBuffer.append("\n");
+        bodyBuffer.append(String.format("\t User Name : %s", username));
+        bodyBuffer.append("\n");
+        bodyBuffer.append(String.format("\t Password : %s", password));
+        bodyBuffer.append("\n");
+        bodyBuffer.append(String.format("\t Role Name : %s", roleName));
+        bodyBuffer.append("\n");
+
+        String subject = String.format("%s app : forgot password", getResources().getString(R.string.app_name));
+        String body = bodyBuffer.toString();
+        String email = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_EMAIL));
+
+        SendGMailTask sendGMailTask = new SendGMailTask(LoginActivity.this);
+        sendGMailTask.execute(new String[]{subject, body, email});
     }
 
     private void gotoHome(SessionLocal session) {

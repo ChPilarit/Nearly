@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import app.ch.pilarit.nearly.R;
+import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
+
 /**
  * Created by ch_pilarit on 4/26/15 AD.
  */
@@ -11,6 +14,7 @@ public class SendGMailTask extends AsyncTask<String, Void, Void>{
     private ProgressDialog progressDialog;
     private Context context;
     private GMailSender sender;
+    private String[] messages;
 
     public SendGMailTask(Context context) {
         this.context = context;
@@ -19,13 +23,16 @@ public class SendGMailTask extends AsyncTask<String, Void, Void>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //progressDialog = ProgressDialog.show(context, "Please wait", "Sending mail", true, false);
+        progressDialog = ProgressDialog.show(context, null, context.getString(R.string.login_forgot_password_wait), true, false);
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        //progressDialog.dismiss();
+        if(progressDialog != null) progressDialog.dismiss();
+        if(messages != null && messages.length == 3) {
+            Boast.makeText(context, String.format(context.getResources().getString(R.string.login_send_mail_complete), messages[2])).show();
+        }
     }
 
     /*
@@ -41,6 +48,7 @@ public class SendGMailTask extends AsyncTask<String, Void, Void>{
         try {
             sender = new GMailSender();
             sender.sendMail(messages[0], messages[1], messages[2]);
+            this.messages = messages;
         } catch (Exception e) {
             e.printStackTrace();
         }
