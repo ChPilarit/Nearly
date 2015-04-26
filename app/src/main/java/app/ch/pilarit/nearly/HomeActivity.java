@@ -1,23 +1,15 @@
 package app.ch.pilarit.nearly;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Telephony;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.software.shell.fab.ActionButton;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -25,6 +17,7 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.TrackListAdapter;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
+import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.TrackSetting;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -43,6 +36,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         if(AccountSessionUtil.hasTracker(this)) {
             Intent gpsTracking = new Intent(this, GPSTracking.class);
             this.startService(gpsTracking);
@@ -55,8 +49,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
     private void initView() {
         //setUpDrawerLayout();
-
         homeLvTracklist = (ListView) findViewById(R.id.home_lv_tracklist);
+        homeLvTracklist.setEmptyView(findViewById(R.id.home_tv_empty));
         setUpTrackListAdapter();
 
         homeImvAdd = (ActionButton) findViewById(R.id.home_imv_add);
@@ -75,7 +69,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.home_imv_add:{
-                gotoMapSetting();
+                if(NetworkUtils.isNetworkAvailable(this)) {
+                    gotoMapSetting();
+                }else{
+                    Boast.makeText(this, R.string.net_warning).show();
+                }
                 break;
             }
         }

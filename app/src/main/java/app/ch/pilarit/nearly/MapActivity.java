@@ -1,6 +1,7 @@
 package app.ch.pilarit.nearly;
 
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -53,11 +54,13 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     private Marker marker;
     private ActionButton mapImvMyLocation;
     private boolean hasFocus;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hasFocus = false;
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
         overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
         setContentView(R.layout.activity_map);
@@ -127,6 +130,10 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         }
 
         if(marker != null) marker.setVisible(false);
+
+        progressDialog = ProgressDialog.show(this, null, getResources().getString(R.string.map_wait));
+        progressDialog.setCancelable(true);
+
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Map.centroid(polygon.getPoints()), this.googleMap.getCameraPosition().zoom));
 
         new Timer().schedule(new TimerTask() {
@@ -139,7 +146,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
                     }
                 });
             }
-        }, 100);
+        }, 1000);
 
     }
 
@@ -149,6 +156,8 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
     }
 
     private void gotoTrackerSetting(Bitmap bitmap) {
+        if(progressDialog != null) progressDialog.dismiss();
+
         Intent gotoTrackerSetting = new Intent(this, TrackerActivity.class);
         gotoTrackerSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.MAP_ACTIVITY);
         gotoTrackerSetting.putExtra(KEY_POLYGON, Map.polygonToStringPolygon(polygon.getPoints()));
@@ -238,12 +247,12 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         if(!selected) {
             mapImvEdit.setImageResource(R.drawable.ic_action_edit_selected);
             mapImvEdit.setTag(true);
-
+            Boast.makeText(this, R.string.map_enable_draw_map).show();
             if(marker != null) marker.setVisible(true);
         }else{
             mapImvEdit.setImageResource(R.drawable.ic_action_edit);
             mapImvEdit.setTag(false);
-
+            Boast.makeText(this, R.string.map_disable_draw_map).show();
             if(marker != null) marker.setVisible(false);
         }
 
@@ -272,7 +281,11 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
 
+        if(id == android.R.id.home){
+            onBackPressed();
             return true;
         }
 

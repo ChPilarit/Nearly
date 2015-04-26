@@ -48,6 +48,7 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
         overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
         setContentView(R.layout.activity_map_history);

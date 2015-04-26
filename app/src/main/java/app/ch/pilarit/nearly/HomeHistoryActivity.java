@@ -1,7 +1,6 @@
 package app.ch.pilarit.nearly;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +31,7 @@ public class HomeHistoryActivity extends BaseActivity {
     private void initView() {
         //setUpDrawerLayout();
         historyLvTracklist = (ListView)findViewById(R.id.history_lv_tracklist);
+        historyLvTracklist.setEmptyView(findViewById(R.id.history_tv_empty));
         setUpHistoryListAdapter();
         checkSMSReceive();
     }

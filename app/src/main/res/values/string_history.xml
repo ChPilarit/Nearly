@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="history_actionbar">History</string>
+    <string name="history_actionbar">History List</string>
     <string name="history_name">Name</string>
     <string name="history_date">Date</string>
     <string name="history_telephone">Telephone</string>
@@ -9,4 +9,5 @@
     <string name="history_dialog_title">Delete</string>
     <string name="histroy_dialog_question">Are you sure to delete?</string>
     <string name="histroy_dialog_progess">Map Loading...</string>
+    <string name="history_emptylist">No history list.</string>
 </resources>

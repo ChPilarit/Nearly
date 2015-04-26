@@ -11,4 +11,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_map_history">MapHistoryActivity</string>
 
+    <string name="net_wifi">Wifi connected.</string>
+    <string name="net_mobile">Internet mobile connected.</string>
+    <string name="net_warning">Please connect internet.</string>
 </resources>

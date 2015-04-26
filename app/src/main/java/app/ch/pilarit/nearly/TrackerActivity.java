@@ -23,7 +23,6 @@ import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.sql.Blob;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,6 +34,7 @@ import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
+import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.TrackSetting;
 import app.ch.pilarit.nearly.services.GPSTracking;
@@ -70,6 +70,7 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_tracker);
 
         doLoadTrackSetting();
@@ -173,7 +174,11 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
                 break;
             }
             case R.id.tracker_imv_map:{
-                gotoMapActivity();
+                if(NetworkUtils.isNetworkAvailable(this)) {
+                    gotoMapActivity();
+                }else{
+                    Boast.makeText(this, R.string.net_warning).show();
+                }
                 break;
             }
             case R.id.tracker_tv_starttime:{

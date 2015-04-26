@@ -42,6 +42,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     private void loadData() {
         String fromActivity = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
         if(KeyGlobal.HOME_ACTIVITY.equals(fromActivity) || KeyGlobal.HOME_HISTORY_ACTIVITY.equals(fromActivity)){
+            getActionBar().setDisplayHomeAsUpEnabled(true);
             sessionLocal = SessionLocal.getInstance(this);
         }
     }
@@ -156,6 +157,11 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if(id == android.R.id.home){
+            onBackPressed();
             return true;
         }
 

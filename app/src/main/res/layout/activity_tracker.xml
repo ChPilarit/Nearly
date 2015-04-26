@@ -49,6 +49,7 @@
                 android:layout_below="@id/tracker_sw_active"
                 android:layout_toRightOf="@id/tracker_imv_map"
                 android:singleLine="true"
+                android:maxLength="50"
                 android:hint="@string/tracker_hint_name"
                 android:id="@+id/tracker_edt_name" />
 
@@ -99,6 +100,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="@dimen/margin_10_dp"
                 android:layout_marginRight="@dimen/margin_10_dp"
+                android:maxLength="20"
                 android:inputType="phone"
                 android:id="@+id/tracker_edt_telephone"
                 android:singleLine="true"

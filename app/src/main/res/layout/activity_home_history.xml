@@ -18,6 +18,17 @@
             android:id="@+id/history_lv_tracklist"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/history_emptylist"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+            android:id="@+id/history_tv_empty" />
     </RelativeLayout>
     <!-- The navigation drawer -->
    <!-- <RelativeLayout
