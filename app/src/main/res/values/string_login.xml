@@ -16,4 +16,7 @@
     <string name = "btn_number_ok">OK</string>
     <string name = "login_hint_password">Password</string>
     <string name = "login_warn_password_invalid">Password invalid.</string>
+    <string name = "login_forgot_password">Forgot Password?</string>
+    <string name="google_stackoverflow"><a href="http://stackoverflow.com/questions/9852184/android-textview-hyperlink?rq=1">Forgot Password</a></string>
+
 </resources>

@@ -1,10 +1,15 @@
 package app.ch.pilarit.nearly;
 
 import android.accounts.Account;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +27,8 @@ import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
+import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
+import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
@@ -40,6 +47,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private ImageButton loginButtonDelete;
     private ImageButton loginButtonOk;
     private EditText loginPassword;
+    private TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +74,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         loginButton0 = (Button) findViewById(R.id.login_button_0);
         loginButtonDelete = (ImageButton) findViewById(R.id.login_button_delete);
         loginButtonOk = (ImageButton) findViewById(R.id.login_button_ok);
+        forgotPassword = (TextView) findViewById(R.id.login_forgot_password);
+        forgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
+        forgotPassword.setText(Html.fromHtml(getResources().getString(R.string.google_stackoverflow)));
+
 
         loginTevUserName.setText(username);
         loginButton1.setOnClickListener(this);
@@ -80,6 +92,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         loginButton0.setOnClickListener(this);
         loginButtonDelete.setOnClickListener(this);
         loginButtonOk.setOnClickListener(this);
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                doConfirmEmail();
+            }
+        });
 
     }
 
@@ -141,8 +161,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 }
                 break;
             }
+
         }
 
+    }
+
+    private void doConfirmEmail() {
+
+        String title = getResources().getString(R.string.home_dialog_forgotpassword);
+        String question = getResources().getString(R.string.home_dialog_confirmEmail);
+        String email = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_EMAIL));
+        String password = String.valueOf(SessionLocal.getInstance(getApplicationContext()).get(KeyAccount.AUTHEN_PASSWORD));
+
+        new DialogComfirm(LoginActivity.this).show(title,R.drawable.ic_action_tick,question+email,new DialogInterface() {
+            @Override
+            public void ok(Dialog dialog) {
+
+
+
+
+                dialog.dismiss();
+            }
+
+            @Override
+            public void cancel(Dialog dialog) {
+
+                dialog.dismiss();
+
+            }
+        });
     }
 
     private void gotoHome(SessionLocal session) {
