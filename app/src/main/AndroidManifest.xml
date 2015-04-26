@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="app.ch.pilarit.nearly" >
+    package="app.poly.myapp.doggy" >
 
     <permission
-        android:name="app.ch.pilarit.nearly.permission.MAPS_RECEIVE"
+        android:name="app.poly.myapp.doggy.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="app.ch.pilarit.nearly.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="app.poly.myapp.doggy.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -57,7 +57,7 @@
             android:value="false" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="app.ch.pilarit.nearly.models" />
+            android:value="app.poly.myapp.doggy.models" />
 
         <activity
             android:name=".RoleActivity"
