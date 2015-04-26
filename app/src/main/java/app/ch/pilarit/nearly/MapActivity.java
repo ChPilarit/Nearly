@@ -33,7 +33,9 @@ import java.util.TimerTask;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.utils.GPSUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
+import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 
 import static android.view.View.OnClickListener;
@@ -65,6 +67,11 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
         overridePendingTransition(R.anim.in_trans_right_left, R.anim.out_trans_left_right);
         setContentView(R.layout.activity_map);
         initView();
+
+        if(!NetworkUtils.isNetworkAvailable(this)){
+            Boast.makeText(this, R.string.net_warning);
+            return;
+        }
     }
 
     private void initView() {
@@ -107,7 +114,7 @@ public class MapActivity extends FragmentActivity implements OnClickListener, On
                 break;
             }
             case R.id.map_imv_mylocation:{
-                doSetMyLocation();
+                if(GPSUtil.isEnableGPS(this)) doSetMyLocation();
                 break;
             }
         }

@@ -14,4 +14,7 @@
     <string name="net_wifi">Wifi connected.</string>
     <string name="net_mobile">Internet mobile connected.</string>
     <string name="net_warning">Please connect internet.</string>
+    <string name="gps_warning">Please enable GPS.</string>
+    <string name="gps_network_warning">Please enable location by WiFi.</string>
+    <string name="sms_warning">Please set this app is sms default app.</string>
 </resources>

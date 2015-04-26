@@ -67,7 +67,7 @@ public class GPS{
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    public boolean isNetworkEnabled(Context context) {
+    public boolean isNetworkGPSEnabled(Context context) {
         return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 

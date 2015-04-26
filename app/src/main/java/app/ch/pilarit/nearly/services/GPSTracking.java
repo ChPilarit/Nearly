@@ -4,13 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.Telephony;
-import android.telephony.SmsManager;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -18,9 +13,6 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -46,12 +38,9 @@ public class GPSTracking extends Service implements LocationListener{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         Log.e("GPSTracking", "start GPS Tracking");
         gps = GPS.getInstance(getApplicationContext());
-        gps.turnGPSOn(getApplicationContext());
         gps.setLocationListener(getApplicationContext(), this);
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -129,6 +118,9 @@ public class GPSTracking extends Service implements LocationListener{
     public void onProviderDisabled(String provider) {
         Log.e("GPSTracking", "onProviderDisabled :" + provider);
         gps = GPS.getInstance(getApplicationContext());
+
+        List<TrackSetting> trackSettingList = TrackSetting.find(TrackSetting.class, "active=1");
+        if(trackSettingList == null || trackSettingList.isEmpty()) return;
         gps.turnGPSOn(getApplicationContext());
     }
 

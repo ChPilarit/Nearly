@@ -17,6 +17,7 @@ import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.validate.EmailValidator;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 
@@ -134,6 +135,11 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
 
         if(email == null || !emailValidator.validate(email)){
             Boast.makeText(AccountActivity.this, R.string.account_warn_email_invalid, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!GlobalUtil.isDefaultSMS(this)){
+            GlobalUtil.setDefaultSMS(this);
             return false;
         }
 

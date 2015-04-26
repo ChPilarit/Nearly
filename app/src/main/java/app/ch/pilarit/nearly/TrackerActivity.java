@@ -31,8 +31,10 @@ import java.util.List;
 
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.gps.GPS;
 import app.ch.pilarit.nearly.libs.map.Map;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
+import app.ch.pilarit.nearly.libs.utils.GPSUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
@@ -193,7 +195,6 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void doSave() {
-
         boolean active = trackerSwActive.isChecked();
         String polygonStr = Map.polygonToStringPolygon(polygon);
         String name = trackerEdtName.getText().toString().trim();
@@ -219,10 +220,7 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
         }
 
         trackSetting.save();
-
-        Intent gpsTracking = new Intent(this, GPSTracking.class);
-        this.startService(gpsTracking);
-        //Boast.makeText(this, "Save Complete " + trackSetting.getId()).show();
+        GPSUtil.startGPSTrackingService(this);
         SessionLocal.getInstance(this).remove(MapActivity.KEY_CACHE_MAP);
         onBackPressed();
     }
@@ -370,6 +368,10 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
                 Boast.makeText(this, R.string.tracker_warn_select_repeat, Toast.LENGTH_LONG).show();
                 return false;
             }
+
+            if(!GPSUtil.isEnableGPS(this)){
+                return false;
+            }
         }
 
         return true;
@@ -438,6 +440,11 @@ public class TrackerActivity extends BaseActivity implements View.OnClickListene
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if(id == android.R.id.home){
+            onBackPressed();
             return true;
         }
 

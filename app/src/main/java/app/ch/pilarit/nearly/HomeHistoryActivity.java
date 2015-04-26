@@ -12,6 +12,8 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.HistoryListAdapter;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
+import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
+import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.History;
 
 public class HomeHistoryActivity extends BaseActivity {
@@ -45,13 +47,17 @@ public class HomeHistoryActivity extends BaseActivity {
     private void checkSMSReceive() {
         String from = getIntent().getStringExtra(KeyGlobal.FROM_ACTIVITY);
         if(KeyGlobal.SMS_RECEIVER.equals(from)) {
-            Intent gotoMapHistory = new Intent(this, MapHistoryActivity.class);
-            gotoMapHistory.putExtra(KeyGlobal.SMS_ID, getIntent().getLongExtra(KeyGlobal.SMS_ID, 0));
-            gotoMapHistory.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
-            startActivity(gotoMapHistory);
+            gotoMapHistory();
         }else{
             GlobalUtil.setDefaultSMS(this);
         }
+    }
+
+    private void gotoMapHistory() {
+        Intent gotoMapHistory = new Intent(this, MapHistoryActivity.class);
+        gotoMapHistory.putExtra(KeyGlobal.SMS_ID, getIntent().getLongExtra(KeyGlobal.SMS_ID, 0));
+        gotoMapHistory.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
+        startActivity(gotoMapHistory);
     }
 
     private void setUpDrawerLayout() {

@@ -10,4 +10,5 @@
     <string name="histroy_dialog_question">Are you sure to delete?</string>
     <string name="histroy_dialog_progess">Map Loading...</string>
     <string name="history_emptylist">No history list.</string>
+    <string name="map_history_actionbar">Map History</string>
 </resources>

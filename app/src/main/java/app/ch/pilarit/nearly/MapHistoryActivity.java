@@ -31,8 +31,11 @@ import java.util.TimerTask;
 
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
+import app.ch.pilarit.nearly.libs.utils.GPSUtil;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
+import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
+import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.History;
 
 public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener, GoogleMap.SnapshotReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMapLoadedCallback, GoogleMap.InfoWindowAdapter {
@@ -54,6 +57,11 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
         setContentView(R.layout.activity_map_history);
         loadData();
         initView();
+
+        if(!NetworkUtils.isNetworkAvailable(this)){
+            Boast.makeText(this, R.string.net_warning);
+            return;
+        }
     }
 
     private void loadData() {
@@ -156,7 +164,7 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.map_imv_mylocation:{
-                doSetMyLocation();
+                if(GPSUtil.isEnableGPS(this)) doSetMyLocation();
                 break;
             }
         }
@@ -183,6 +191,11 @@ public class MapHistoryActivity extends FragmentActivity implements OnMapReadyCa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if(id == android.R.id.home){
+            onBackPressed();
             return true;
         }
 

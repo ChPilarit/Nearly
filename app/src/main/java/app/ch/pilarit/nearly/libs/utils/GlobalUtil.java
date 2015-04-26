@@ -44,13 +44,25 @@ public class GlobalUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
             String myPackageName = context.getPackageName();
             if (!Telephony.Sms.getDefaultSmsPackage(context).equals(myPackageName)) {
-                // App is not default.
-                // Show the "not currently set as the default SMS app" interface
+                Boast.makeText(context, R.string.sms_warning).show();
                 Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
                 intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
                 context.startActivity(intent);
             }
         }
+    }
+
+    public static boolean isDefaultSMS(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            String myPackageName = context.getPackageName();
+            if (Telephony.Sms.getDefaultSmsPackage(context).equals(myPackageName)) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static void sendSMS(String telephone, String message) {

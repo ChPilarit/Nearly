@@ -16,11 +16,11 @@ import java.util.List;
 import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.adapters.TrackListAdapter;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
+import app.ch.pilarit.nearly.libs.utils.GPSUtil;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.utils.NetworkUtils;
 import app.ch.pilarit.nearly.libs.views.dialogs.Boast;
 import app.ch.pilarit.nearly.models.TrackSetting;
-import app.ch.pilarit.nearly.services.GPSTracking;
 import app.ch.pilarit.nearly.utils.AccountSessionUtil;
 
 
@@ -38,8 +38,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
 
         if(AccountSessionUtil.hasTracker(this)) {
-            Intent gpsTracking = new Intent(this, GPSTracking.class);
-            this.startService(gpsTracking);
+            GPSUtil.startGPSTrackingService(this);
         }
 
         super.onCreate(savedInstanceState);

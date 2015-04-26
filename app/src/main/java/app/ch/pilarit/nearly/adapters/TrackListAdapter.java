@@ -22,6 +22,7 @@ import app.ch.pilarit.nearly.R;
 import app.ch.pilarit.nearly.TrackerActivity;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.map.Map;
+import app.ch.pilarit.nearly.libs.utils.GPSUtil;
 import app.ch.pilarit.nearly.libs.utils.ImageUtil;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogComfirm;
 import app.ch.pilarit.nearly.libs.views.dialogs.DialogInterface;
@@ -94,8 +95,15 @@ public class TrackListAdapter extends BaseAdapter {
         viewItemHolder.tracklistItemActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                trackSetting.setActive(checked);
+                if(checked && !GPSUtil.isEnableGPS(context)){
+                    trackSetting.setActive(false);
+                    compoundButton.setChecked(false);
+                }else{
+                    trackSetting.setActive(checked);
+                }
+
                 trackSetting.save();
+
             }
         });
         viewItemHolder.tracklistItemActive.setChecked(trackSetting.isActive());
