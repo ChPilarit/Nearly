@@ -4,4 +4,6 @@
     <string name="home_dialog_title">Delete</string>
     <string name="home_dialog_question">Are you sure to delete?</string>
     <string name="home_emptylist">No track list.\nYou can touch add button for add track.</string>
+    <string name="home_dialog_forgotpassword">Forgot Password</string>
+    <string name="home_dialog_confirmEmail">Password will send to your Email: </string>
 </resources>
