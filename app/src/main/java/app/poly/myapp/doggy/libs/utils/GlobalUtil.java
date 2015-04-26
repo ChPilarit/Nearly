@@ -130,7 +130,7 @@ public class GlobalUtil {
         Notification notification  = new Notification.Builder(context)
                 .setContentTitle(String.format("%s out form area.", history.getName()))
                 .setContentText(String.format("SMS From %s", history.getTelephone()))
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.nearly2)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
                 .build();

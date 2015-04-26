@@ -146,7 +146,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent gotoAccountSetting = new Intent(this, AccountActivity.class);
-            gotoAccountSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_HISTORY_ACTIVITY);
+            gotoAccountSetting.putExtra(KeyGlobal.FROM_ACTIVITY, KeyGlobal.HOME_ACTIVITY);
             startActivity(gotoAccountSetting);
             return true;
         }
