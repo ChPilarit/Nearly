@@ -10,4 +10,5 @@
     <string name="account_warn_password_lenght">Password must length > 3.</string>
     <string name="account_warn_password_invalid">Password mismatch.</string>
     <string name="account_warn_email_invalid">Email invalid.</string>
+    <string name="account_at_gmail">\@gmail.com</string>
 </resources>

@@ -58,16 +58,38 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:inputType="numberPassword"/>
-                <EditText
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/account_edt_email"
                     android:layout_below="@id/account_edt_repassword"
-                    android:hint="@string/account_hint_email"
-                    android:layout_margin="@dimen/margin_10_dp"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:inputType="textEmailAddress"/>
+                    android:layout_marginLeft="@dimen/margin_10_dp"
+                    android:layout_marginTop="@dimen/margin_10_dp"
+                    android:layout_marginBottom="@dimen/margin_10_dp">
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/account_at_gmail"
+                        android:id="@+id/account_at_gmail"
+                        android:layout_gravity="right|center"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:layout_toLeftOf="@+id/account_at_gmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/account_edt_email"
+                        android:hint="@string/account_hint_email"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:inputType="text"/>
+
+                </RelativeLayout>
+
             </RelativeLayout>
 
 

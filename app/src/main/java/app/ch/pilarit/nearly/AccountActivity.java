@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -31,6 +32,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     private EditText accountEdtEmail;
     private EmailValidator emailValidator;
     private SessionLocal sessionLocal;
+    private TextView accountTvAtGmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         accountEdtPassword = (EditText) findViewById(R.id.account_edt_password);
         accountEdtRepassword = (EditText) findViewById(R.id.account_edt_repassword);
         accountEdtEmail = (EditText) findViewById(R.id.account_edt_email);
+        accountTvAtGmail = (TextView) findViewById(R.id.account_at_gmail);
         accountBtnSave = (Button) findViewById(R.id.account_btn_save);
         accountBtnSave.setOnClickListener(this);
 
@@ -60,7 +63,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             accountEdtUsername.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_USERNAME)));
             accountEdtPassword.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_PASSWORD)));
             accountEdtRepassword.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_PASSWORD)));
-            accountEdtEmail.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_EMAIL)));
+            accountEdtEmail.setText(String.valueOf(sessionLocal.get(KeyAccount.AUTHEN_EMAIL)).replace(accountTvAtGmail.getText().toString(),""));
         }
     }
 
@@ -114,7 +117,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         String username = accountEdtUsername.getText().toString();
         String password = accountEdtPassword.getText().toString();
         String repassword = accountEdtRepassword.getText().toString();
-        String email = accountEdtEmail.getText().toString();
+        String email = String.format("%s%s", accountEdtEmail.getText().toString(), accountTvAtGmail.getText().toString());
 
         if(username.length() < 4){
             Boast.makeText(AccountActivity.this, R.string.account_warn_username_lenght, Toast.LENGTH_SHORT).show();
