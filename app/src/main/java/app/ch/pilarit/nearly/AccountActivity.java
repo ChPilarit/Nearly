@@ -17,6 +17,8 @@ import app.ch.pilarit.nearly.activity.BaseActivity;
 import app.ch.pilarit.nearly.keys.KeyAccount;
 import app.ch.pilarit.nearly.keys.KeyGlobal;
 import app.ch.pilarit.nearly.libs.authen.AuthenLocal;
+import app.ch.pilarit.nearly.libs.mail.GMailSender;
+import app.ch.pilarit.nearly.libs.mail.SendGMailTask;
 import app.ch.pilarit.nearly.libs.session.SessionLocal;
 import app.ch.pilarit.nearly.libs.utils.GlobalUtil;
 import app.ch.pilarit.nearly.libs.validate.EmailValidator;
@@ -96,7 +98,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         String username = accountEdtUsername.getText().toString();
         String password = accountEdtPassword.getText().toString();
         String repassword = accountEdtRepassword.getText().toString();
-        String email = accountEdtEmail.getText().toString();
+        String email = String.format("%s%s", accountEdtEmail.getText().toString(), accountTvAtGmail.getText().toString());
         int roleId = 0;
         if(sessionLocal != null && sessionLocal.hasSession()){
             roleId = Integer.valueOf(String.valueOf(sessionLocal.get(KeyAccount.ROLE_ID)));
@@ -145,6 +147,9 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             GlobalUtil.setDefaultSMS(this);
             return false;
         }
+
+        SendGMailTask sendGMailTask = new SendGMailTask(this);
+        sendGMailTask.execute(new String[]{"test","test", email});
 
         return true;
     }
